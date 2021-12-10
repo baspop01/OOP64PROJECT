@@ -16,6 +16,9 @@ class PlatformPositon{
 class PlatformPositon2{
     int x,y;
 }
+class JettPosition{
+    int x,y;
+}
 
 public class DoodleJump extends JPanel implements Runnable, KeyListener{
     final int WIDTH = 400;
@@ -35,10 +38,12 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
     
     boolean isRunning;
     Thread thread;
-    BufferedImage view, background, platform, doodle, broke, doodleL, doodleR, doodle2;
+    BufferedImage view, background, platform, doodle, broke, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2, doodleL2;
     
     PlatformPositon[] platformsPosition;
     PlatformPositon2[] platformsPosition2;
+    JettPosition[] JettPosition;
+    
     int x = 100, y = 100, h = 150;
     float dy = 0;
     boolean right, left;
@@ -92,12 +97,18 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
             doodle = ImageIO.read(getClass().getResource("doodle.png"));
             doodle2 = ImageIO.read(getClass().getResource("doodle.png"));
             broke = ImageIO.read(getClass().getResource("platform1.png"));
-            doodleL = ImageIO.read(getClass().getResource("doodleleft.png")); //new
-            doodleR = ImageIO.read(getClass().getResource("doodleright.png")); //new
+            doodleL = ImageIO.read(getClass().getResource("doodleleft.png"));
+            doodleR = ImageIO.read(getClass().getResource("doodleright.png")); 
+            doodleL2 = ImageIO.read(getClass().getResource("doodleleft.png")); 
+            doodleR2 = ImageIO.read(getClass().getResource("doodleright.png")); 
+            doodleJett = ImageIO.read(getClass().getResource("doodlejett.png"));
+            Jett = ImageIO.read(getClass().getResource("jettpack.png"));
              
             platformsPosition = new PlatformPositon[20];
             
             platformsPosition2 = new PlatformPositon2[20];
+            
+            JettPosition = new JettPosition[20];
             
             for(int i = 0; i < 10; i++){
                 platformsPosition[i] = new PlatformPositon();
@@ -109,6 +120,11 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
                 platformsPosition2[i] = new PlatformPositon2();
                 platformsPosition2[i].x = new Random().nextInt(400);
                 platformsPosition2[i].y = new Random().nextInt(533);
+            }
+            for(int i = 0; i < 10; i++){
+                JettPosition[i] = new JettPosition();
+                JettPosition[i].x = new Random().nextInt(400);
+                JettPosition[i].y = new Random().nextInt(533);
             }
             
             
@@ -166,6 +182,14 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
                     platformsPosition2[i].x = new Random().nextInt(400);
                 }
             }
+            for(int i = 0; i < 1; i++){
+                y = h;
+                JettPosition[i].y = JettPosition[i].y - (int) dy;
+                if (JettPosition[i].y > 533){
+                    JettPosition[i].y = 0;
+                    JettPosition[i].x = new Random().nextInt(400);
+                }
+            }
         }
         
         //เมื่อเหยียบพื้นธรรมดา
@@ -177,10 +201,26 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
                     (dy > 0)) {
                 dy = -10;
                 doodle = doodle2;
+                doodleR = doodleR2;
+                doodleL = doodleL2;
                 sound1 = new SoundPlay1("/Music/jump.wav");
             }
-            
-            
+        }
+        //เไอเทม
+        for(int i = 0; i < 1; i++){
+            if ((x + 35 > JettPosition[i].x) &&
+                    (x + 35 < JettPosition[i].x + 68) &&
+                    (y + 70 > JettPosition[i].y) &&
+                    (y + 70 < JettPosition[i].y + 14) &&
+                    (dy > 0)) {
+                dy = -40;
+                doodle = doodleJett;
+                doodleR = doodleJett;
+                doodleL = doodleJett;
+                JettPosition[i].y = -100;
+                JettPosition[i].x = -100;
+                sound1 = new SoundPlay1("/Music/jump.wav");
+            }
         }
         
         //เมื่อเหยียบพื้นแตก
@@ -193,6 +233,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
                     (dy > 0)) {
                 dy = -8;
                 doodle = doodle2;
+                doodleR = doodleR2;
+                doodleL = doodleL2;
                 platformsPosition2[i].y = -100;
                 platformsPosition2[i].x = -100;                
                 sound2 = new SoundPlay2("/Music/broke.wav");
@@ -229,6 +271,16 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
                 null
             );
         }
+        for(int i = 0; i < 1; i++){
+            g2.drawImage(
+                Jett,
+                JettPosition[i].x,
+                JettPosition[i].y,
+                Jett.getWidth(),
+                Jett.getHeight(),
+                null
+            );
+        }
         Graphics g = getGraphics();
         g.drawImage(view, 0, 0, WIDTH, HEIGHT, null);
         g.dispose();
@@ -258,11 +310,11 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             right = true;
-            doodle = doodleR; //new
+            doodle = doodleR;
         }
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
             left = true;
-            doodle = doodleL; //new
+            doodle = doodleL; 
         }     
     }
     
