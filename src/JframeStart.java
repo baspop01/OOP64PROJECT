@@ -23,7 +23,7 @@ public class JframeStart extends KeyAdapter{
         int key = ke.getKeyCode();
         if(key==KeyEvent.VK_SPACE){
             window.dispose();
-            Jframe fr = new Jframe();
+            display fr = new display();
             
 
         }

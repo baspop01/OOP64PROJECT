@@ -1,3 +1,5 @@
+import java.applet.Applet;
+import java.applet.AudioClip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -5,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.util.Random;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 class PlatformPositon{
     int x,y;
@@ -17,10 +20,22 @@ class PlatformPositon2{
 public class DoodleJump extends JPanel implements Runnable, KeyListener{
     final int WIDTH = 400;
     final int HEIGHT = 533;
+    static display dis;
+    SoundPlay1 sound1;
+    SoundPlay2 sound2;
+    
+
+
+//    File wavFile = new File("C:\\Users\\hp\\Documents\\NetBeansProjects\\project\\src\\Music\\mystery.wav"); //new
+//    AudioClip sound; //new
+    
+    
+    
+    
     
     boolean isRunning;
     Thread thread;
-    BufferedImage view, background, platform, doodle,broke;
+    BufferedImage view, background, platform, doodle, broke, doodleL, doodleR, doodle2;
     
     PlatformPositon[] platformsPosition;
     PlatformPositon2[] platformsPosition2;
@@ -28,21 +43,11 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
     float dy = 0;
     boolean right, left;
     
+    
      
     public DoodleJump(){
-        
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         addKeyListener(this);
-    }
-    
-    public static void main(String[] args) {
-        JFrame w = new JFrame("Doodle Jump");
-        w.setResizable(false);
-        w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        w.add(new DoodleJump());
-        w.pack();
-        w.setLocationRelativeTo(null);
-        w.setVisible(true);
     }
 
     @Override
@@ -55,15 +60,40 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
         }
     }
     
+//    public void audio(){ //new
+//        try{
+//            sound = Applet.newAudioClip(wavFile.toURL());
+//        }
+//        catch(Exception e){
+//            e.printStackTrace();
+//        }
+//        sound.loop();
+//        
+////        sound.play();
+//        
+////        if(test == 0){
+////            sound.loop();
+////        }
+////        else{
+////            sound.stop();
+////            System.out.println("test");         
+////        }  
+//    } //new
+    
+    
+    
     public void start(){
+//        audio(); //new      
         try{
             view = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
             
             background = ImageIO.read(getClass().getResource("background.png"));
             platform = ImageIO.read(getClass().getResource("platform.png"));
             doodle = ImageIO.read(getClass().getResource("doodle.png"));
+            doodle2 = ImageIO.read(getClass().getResource("doodle.png"));
             broke = ImageIO.read(getClass().getResource("platform1.png"));
-            
+            doodleL = ImageIO.read(getClass().getResource("doodleleft.png")); //new
+            doodleR = ImageIO.read(getClass().getResource("doodleright.png")); //new
              
             platformsPosition = new PlatformPositon[20];
             
@@ -87,6 +117,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
             e.printStackTrace();
         }
     }
+
     public void update(){
         
         //เกี่ยวกับตำแหน่งตัวละคร
@@ -98,8 +129,14 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
         dy += 0.2;
         y += dy;
         if(y >= 500){
-           dy = -10;
-           JOptionPane.showMessageDialog(null, "มึงตาย", "GAMEOVER", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "คุณเกมโอเวอร์แล้ว กด OK เพื่อเริ่มใหม่", "Game Over", JOptionPane.WARNING_MESSAGE);
+            start();
+            y = 100;
+            x = 100;
+            dy = 0;
+            right = false;
+            left = false;
+                   
         }
         if(x <= -30){
             x = 425;
@@ -139,6 +176,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
                     (y + 70 < platformsPosition[i].y + 14) &&
                     (dy > 0)) {
                 dy = -10;
+                doodle = doodle2;
+                sound1 = new SoundPlay1("/Music/jump.wav");
             }
             
             
@@ -152,14 +191,19 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
                     (y + 70 > platformsPosition2[i].y) &&
                     (y + 70 < platformsPosition2[i].y + 14) &&
                     (dy > 0)) {
-                dy = -10;
+                dy = -8;
+                doodle = doodle2;
                 platformsPosition2[i].y = -100;
-                platformsPosition2[i].x = -100;
-                
+                platformsPosition2[i].x = -100;                
+                sound2 = new SoundPlay2("/Music/broke.wav");
                 
             }
         }
+        
     }
+    
+        
+   
                   
     public void draw(){
         Graphics2D g2 = (Graphics2D) view.getGraphics();
@@ -214,10 +258,12 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener{
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             right = true;
+            doodle = doodleR; //new
         }
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
             left = true;
-        }
+            doodle = doodleL; //new
+        }     
     }
     
     @Override
