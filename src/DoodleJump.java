@@ -50,7 +50,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
     PlatformPositon3[] platformsPosition3;
     JettPosition[] JettPosition;
 
-    int x = 100, y = 100, h = 150;
+    int x = 100, y = 100, h = 150, sc1 = 0;
     float dy = 0;
     boolean right, left;
 
@@ -154,6 +154,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
         if (y >= 500) {
             JOptionPane.showMessageDialog(null, "คุณเกมโอเวอร์แล้ว กด OK เพื่อเริ่มใหม่", "Game Over", JOptionPane.WARNING_MESSAGE);
             start();
+            sc1 = 0;
             y = 100;
             x = 100;
             dy = 0;
@@ -170,12 +171,13 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
 
         //สร้างแพลตฟอร์ม
         if (y < h) {
+            sc1++;
             for (int i = 0; i < 6; i++) {
                 y = h;
                 platformsPosition[i].y = platformsPosition[i].y - (int) dy;
                 if (platformsPosition[i].y > 533) {
                     platformsPosition[i].y = 0;
-                    platformsPosition[i].x = new Random().nextInt(400);
+                    platformsPosition[i].x = new Random().nextInt(350);
                 }
 
             }
@@ -185,7 +187,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 platformsPosition2[i].y = platformsPosition2[i].y - (int) dy;
                 if (platformsPosition2[i].y > 533) {
                     platformsPosition2[i].y = 0;
-                    platformsPosition2[i].x = new Random().nextInt(400);
+                    platformsPosition2[i].x = new Random().nextInt(350);
                 }
             }
             for (int i = 0; i < 1; i++) {
@@ -193,7 +195,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 platformsPosition3[i].y = platformsPosition3[i].y - (int) dy;
                 if (platformsPosition3[i].y > 533) {
                     platformsPosition3[i].y = 0;
-                    platformsPosition3[i].x = new Random().nextInt(400);
+                    platformsPosition3[i].x = new Random().nextInt(350);
                 }
             }
             for (int i = 0; i < 1; i++) {
@@ -201,7 +203,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 JettPosition[i].y = JettPosition[i].y - (int) dy;
                 if (JettPosition[i].y > 533) {
                     JettPosition[i].y = 0;
-                    JettPosition[i].x = new Random().nextInt(400);
+                    JettPosition[i].x = new Random().nextInt(350);
                 }
             }
         }
@@ -222,11 +224,11 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
         }
         //ไอเทม
         for (int i = 0; i < 1; i++) {
-            if ((x + 35 > JettPosition[i].x)
-                    && (x + 35 < JettPosition[i].x + 68)
-                    && (y + 70 > JettPosition[i].y)
-                    && (y + 70 < JettPosition[i].y + 14)
-                    && (dy > 0)) {
+            if ((x + 15 > JettPosition[i].x)
+                    && (x + 15 < JettPosition[i].x + 68)
+                    && (y + 40 > JettPosition[i].y)
+                    && (y + 40 < JettPosition[i].y + 14)
+                    && ((dy < 0) || (dy >= 0))) {
                 dy = -40;
                 doodle = doodleJett;
                 doodleR = doodleJett;
@@ -261,8 +263,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
 
             if ((x + 35 > platformsPosition3[i].x)
                     && (x + 35 < platformsPosition3[i].x + 68)
-                    && (y + 50 > platformsPosition3[i].y)
-                    && (y + 50 < platformsPosition3[i].y + 14)
+                    && (y + 60 > platformsPosition3[i].y)
+                    && (y + 60 < platformsPosition3[i].y + 14)
                     && (dy > 0)) {
                 
                 sound3 = new SoundPlay2("/Music/spike.wav");
@@ -326,8 +328,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     null
             );
         }
-        
-         
+        g2.setColor(Color.black);
+        g2.drawString("score : "+sc1, 15, 15);
         Graphics g = getGraphics();
         g.drawImage(view, 0, 0, WIDTH, HEIGHT, null);
         g.dispose();
