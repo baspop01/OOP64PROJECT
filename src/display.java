@@ -17,6 +17,7 @@ public class display extends DoodleJump{
         w.pack();
         w.setLocationRelativeTo(null);
         w.setVisible(true);
+        
     }
     public static void main(String[] args) {
         new display();

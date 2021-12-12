@@ -43,14 +43,14 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
 //    AudioClip sound; //new
     boolean isRunning;
     Thread thread;
-    BufferedImage view, background, platform, doodle, broke,spike, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2, doodleL2;
+    BufferedImage view, background, platform, doodle, broke,spike, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2, doodleL2,heart;
 
     PlatformPositon[] platformsPosition;
     PlatformPositon2[] platformsPosition2;
     PlatformPositon3[] platformsPosition3;
     JettPosition[] JettPosition;
 
-    int x = 100, y = 100, h = 150, sc1 = 0;
+    int x = 100, y = 100, h = 150, sc1 = 0,health = 145;
     float dy = 0;
     boolean right, left;
 
@@ -105,6 +105,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             doodleR2 = ImageIO.read(getClass().getResource("doodleright.png"));
             doodleJett = ImageIO.read(getClass().getResource("doodlejett.png"));
             Jett = ImageIO.read(getClass().getResource("jettpack.png"));
+            heart = ImageIO.read(getClass().getResource("png-clipart-heart-heart.png"));
 
             platformsPosition = new PlatformPositon[20];
 
@@ -135,6 +136,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 JettPosition[i].x = new Random().nextInt(400);
                 JettPosition[i].y = new Random().nextInt(533);
             }
+            health = 145;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -219,6 +221,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 doodle = doodle2;
                 doodleR = doodleR2;
                 doodleL = doodleL2;
+                health = 145;
                 sound1 = new SoundPlay1("/Music/jump.wav");
             }
         }
@@ -267,18 +270,28 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     && (y + 60 < platformsPosition3[i].y + 14)
                     && (dy > 0)) {
                 
-                sound3 = new SoundPlay2("/Music/spike.wav");
-                doodle = doodle2;
-                doodleR = doodleR2;
-                doodleL = doodleL2;
+//                sound3 = new SoundPlay2("/Music/spike.wav");
+//                doodle = doodle2;
+//                doodleR = doodleR2;
+//                doodleL = doodleL2;
                 
-                JOptionPane.showMessageDialog(null, "คุณเกมโอเวอร์แล้ว กด OK เพื่อเริ่มใหม่", "Game Over", JOptionPane.WARNING_MESSAGE);
-                start();
+                if(health > 0){
+                    health -= 50;
+                    dy = -10;
+                    doodle = doodle2;
+                    doodleR = doodleR2;
+                    doodleL = doodleL2;
+                    sound3 = new SoundPlay2("/Music/spike.wav");
+                }else{
+                    JOptionPane.showMessageDialog(null, "คุณเกมโอเวอร์แล้ว กด OK เพื่อเริ่มใหม่", "Game Over", JOptionPane.WARNING_MESSAGE);                  
+                    start();
+                }
                 
                 
 
             }
         }
+  
         
         
 
@@ -330,9 +343,19 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
         }
         g2.setColor(Color.black);
         g2.drawString("score : "+sc1, 15, 15);
+        
+        g2.drawImage(heart,10,23,30,25,null);
+        g2.setStroke(new BasicStroke(16.0f));
+	g2.setColor(new Color(241, 98, 69));
+        g2.drawLine(50,35,60+health,35);	
+	g2.setColor(Color.white);
+	g2.setStroke(new BasicStroke(5.0f));
+        g2.drawRect(40,25,170,20);
+        
         Graphics g = getGraphics();
         g.drawImage(view, 0, 0, WIDTH, HEIGHT, null);
         g.dispose();
+        
     }
 
     @Override
@@ -376,6 +399,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    
     @Override
     public void keyTyped(KeyEvent ke) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
