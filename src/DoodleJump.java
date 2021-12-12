@@ -29,7 +29,10 @@ class JettPosition {
 
     int x, y;
 }
-
+//class BoombPosition {
+//
+//    int x, y;
+//}
 public class DoodleJump extends JPanel implements Runnable, KeyListener {
 
     final int WIDTH = 400;
@@ -38,17 +41,19 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
     SoundPlay1 sound1;
     SoundPlay2 sound2;
     SoundPlay2 sound3;
+    SoundPlay2 sound4;
 
 //    File wavFile = new File("C:\\Users\\hp\\Documents\\NetBeansProjects\\project\\src\\Music\\mystery.wav"); //new
 //    AudioClip sound; //new
     boolean isRunning;
     Thread thread;
-    BufferedImage view, background, platform, doodle, broke,spike, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2, doodleL2,heart;
+    BufferedImage view, background, platform, doodle, broke,spike, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2, doodleL2,heart,Boomb;
 
     PlatformPositon[] platformsPosition;
     PlatformPositon2[] platformsPosition2;
     PlatformPositon3[] platformsPosition3;
     JettPosition[] JettPosition;
+//    BoombPosition[] BoombPosition;
 
     int x = 100, y = 100, h = 150, sc1 = 0,health = 145;
     float dy = 0;
@@ -106,7 +111,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             doodleJett = ImageIO.read(getClass().getResource("doodlejett.png"));
             Jett = ImageIO.read(getClass().getResource("jettpack.png"));
             heart = ImageIO.read(getClass().getResource("png-clipart-heart-heart.png"));
-
+//            Boomb = ImageIO.read(getClass().getResource("bomb.png"));
+                    
             platformsPosition = new PlatformPositon[20];
 
             platformsPosition2 = new PlatformPositon2[20];
@@ -114,6 +120,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             platformsPosition3 = new PlatformPositon3[20];
 
             JettPosition = new JettPosition[20];
+            
+//            BoombPosition = new BoombPosition[20];
 
             for (int i = 0; i < 10; i++) {
                 platformsPosition[i] = new PlatformPositon();
@@ -136,6 +144,11 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 JettPosition[i].x = new Random().nextInt(400);
                 JettPosition[i].y = new Random().nextInt(533);
             }
+//            for (int i = 0; i < 10; i++) {
+//                BoombPosition[i] = new BoombPosition();
+//                BoombPosition[i].x = new Random().nextInt(400);
+//                BoombPosition[i].y = new Random().nextInt(533);
+//            }
             health = 145;
 
         } catch (Exception e) {
@@ -154,6 +167,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
         dy += 0.2;
         y += dy;
         if (y >= 500) {
+            sound3 = new SoundPlay2("/Music/dead.wav.wav");
             JOptionPane.showMessageDialog(null, "คุณเกมโอเวอร์แล้ว กด OK เพื่อเริ่มใหม่", "Game Over", JOptionPane.WARNING_MESSAGE);
             start();
             sc1 = 0;
@@ -208,6 +222,14 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     JettPosition[i].x = new Random().nextInt(350);
                 }
             }
+//            for (int i = 0; i < 1; i++) {
+//                y = h;
+//                BoombPosition[i].y = BoombPosition[i].y - (int) dy;
+//                if (BoombPosition[i].y > 533) {
+//                    BoombPosition[i].y = 0;
+//                    BoombPosition[i].x = new Random().nextInt(350);
+//                }
+//            }
         }
 
         //เมื่อเหยียบพื้นธรรมดา
@@ -249,7 +271,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     && (y + 70 > platformsPosition2[i].y)
                     && (y + 70 < platformsPosition2[i].y + 14)
                     && (dy > 0)) {
-                dy = -1;
+                dy = -8;
                 doodle = doodle2;
                 doodleR = doodleR2;
                 doodleL = doodleL2;
@@ -282,6 +304,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     doodleL = doodleL2;
                     sound3 = new SoundPlay2("/Music/spike.wav");
                 }else{
+                    health = 0;
+                    sound3 = new SoundPlay2("/Music/dead.wav.wav");
                     JOptionPane.showMessageDialog(null, "คุณเกมโอเวอร์แล้ว กด OK เพื่อเริ่มใหม่", "Game Over", JOptionPane.WARNING_MESSAGE);                  
                     start();
                 }
@@ -290,10 +314,37 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
 
             }
         }
-  
-        
-        
-
+//        //เมื่อเหยียบระเยิด
+//        for (int i = 0; i < 1; i++) {
+//
+//            if ((x + 35 > BoombPosition[i].x)
+//                    && (x + 35 < BoombPosition[i].x + 68)
+//                    && (y + 60 > BoombPosition[i].y)
+//                    && (y + 60 < BoombPosition[i].y + 14)
+//                    && (dy > 0)) {
+//                
+////                sound3 = new SoundPlay2("/Music/spike.wav");
+////                doodle = doodle2;
+////                doodleR = doodleR2;
+////                doodleL = doodleL2;
+//                
+//                if(health > 0){
+//                    health -= 70;
+//                    dy = -5;
+//                    doodle = doodle2;
+//                    doodleR = doodleR2;
+//                    doodleL = doodleL2;
+//                    sound3 = new SoundPlay2("/Music/boomb.wav");
+//                }else{
+//                    sound3 = new SoundPlay2("/Music/dead.wav.wav");
+//                    JOptionPane.showMessageDialog(null, "คุณเกมโอเวอร์แล้ว กด OK เพื่อเริ่มใหม่", "Game Over", JOptionPane.WARNING_MESSAGE);                  
+//                    start();
+//                }
+//                
+//                
+//
+//            }
+//        }       
     }
 
     public void draw() {
@@ -340,6 +391,16 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     null
             );
         }
+//        for (int i = 0; i < 1; i++) {
+//            g2.drawImage(
+//                    Boomb,
+//                    BoombPosition[i].x,
+//                    BoombPosition[i].y,
+//                    Boomb.getWidth(),
+//                    Boomb.getHeight(),
+//                    null
+//            );
+//        }
         g2.setColor(Color.black);
         g2.drawString("score : "+sc1, 15, 15);
         
