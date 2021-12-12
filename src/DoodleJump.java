@@ -221,7 +221,6 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 doodle = doodle2;
                 doodleR = doodleR2;
                 doodleL = doodleL2;
-                health = 145;
                 sound1 = new SoundPlay1("/Music/jump.wav");
             }
         }
