@@ -249,7 +249,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     && (y + 70 > platformsPosition2[i].y)
                     && (y + 70 < platformsPosition2[i].y + 14)
                     && (dy > 0)) {
-                dy = -8;
+                dy = -1;
                 doodle = doodle2;
                 doodleR = doodleR2;
                 doodleL = doodleL2;
