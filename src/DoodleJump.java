@@ -10,17 +10,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 
-class PlatformPositon { //พื้นธรรมดา
+class PlatformPositon {
 
     int x, y;
 }
 
-class PlatformPositon2 { //พื้นแตก
+class PlatformPositon2 {
 
     int x, y;
 }
 
-class PlatformPositon3 { //พื้นหนาม
+class PlatformPositon3 {
 
     int x, y;
 }
@@ -30,7 +30,7 @@ class PlatformPositon4 { //พื้นฟ้า
     int x, y;
 }
 
-class PlatformPositon5 { //bomb
+class PlatformPositon5 {
 
     int x, y;
 }
@@ -45,7 +45,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
     final int WIDTH = 400;
     final int HEIGHT = 533;
     static display dis;
-    private int st = 0;
+
     SoundPlay1 sound1;
     SoundPlay2 sound2;
     SoundPlay2 sound3;
@@ -54,7 +54,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
 //    AudioClip sound; //new
     boolean isRunning;
     Thread thread;
-    BufferedImage view, background, platform, doodle, broke,spike,invis,bomb, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2, doodleL2, heart, map_end;
+    BufferedImage view, background, platform, doodle, broke,spike,invis, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2, doodleL2, heart, topbar, scoretest, htet1, htet2, htet3, htet4, bomb, map_end;
 
     PlatformPositon[] platformsPosition;
     PlatformPositon2[] platformsPosition2;
@@ -63,8 +63,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
     PlatformPositon5[] platformsPosition5;
     JettPosition[] JettPosition;
 
-    int x = 100, y = 100, h = 150, sc1 = 0,health = 145;
-    float dy = 0;
+    int x = 100, y = 100, h = 150, sc1 = 0,health = 100, st=0, sc2=0;
+    float dy = (int) (Math.random());
     boolean right, left;
 
     public DoodleJump() {
@@ -113,63 +113,66 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             broke = ImageIO.read(getClass().getResource("platform1.png"));
             spike = ImageIO.read(getClass().getResource("platform2.png"));
             invis = ImageIO.read(getClass().getResource("platform3.png"));
-            bomb = ImageIO.read(getClass().getResource("bomb.png"));
-            doodleR = ImageIO.read(getClass().getResource("doodleright1.png"));
             doodleL = ImageIO.read(getClass().getResource("doodleleft1.png"));
-            doodleR2 = ImageIO.read(getClass().getResource("doodleright1.png"));
+            doodleR = ImageIO.read(getClass().getResource("doodleright1.png"));
             doodleL2 = ImageIO.read(getClass().getResource("doodleleft1.png"));
+            doodleR2 = ImageIO.read(getClass().getResource("doodleright1.png"));
             doodleJett = ImageIO.read(getClass().getResource("doodlejett.png"));
             Jett = ImageIO.read(getClass().getResource("jettpack.png"));
             heart = ImageIO.read(getClass().getResource("png-clipart-heart-heart.png"));
-//            map_end = ImageIO.read(getClass().getResource("map_end.jpg"));
+            topbar = ImageIO.read(getClass().getResource("topbar.png"));
+            scoretest = ImageIO.read(getClass().getResource("sctest1.png"));
+            htet4 = ImageIO.read(getClass().getResource("testh.png")); 
+            htet1 = ImageIO.read(getClass().getResource("testh1.png"));
+            htet2 = ImageIO.read(getClass().getResource("testh2.png"));
+            htet3 = ImageIO.read(getClass().getResource("testh3.png"));
+            bomb = ImageIO.read(getClass().getResource("bomb.png"));
+            map_end = ImageIO.read(getClass().getResource("map_end.jpg"));
 
-            platformsPosition = new PlatformPositon[9];
+            platformsPosition = new PlatformPositon[20];
 
-            platformsPosition2 = new PlatformPositon2[3]; //พื้นแตก
+            platformsPosition2 = new PlatformPositon2[20];
             
-            platformsPosition3 = new PlatformPositon3[1];
+            platformsPosition3 = new PlatformPositon3[20];
             
-            platformsPosition4 = new PlatformPositon4[3];
+            platformsPosition4 = new PlatformPositon4[20];
             
-            platformsPosition5 = new PlatformPositon5[1];
+            platformsPosition5 = new PlatformPositon5[3];
 
-            JettPosition = new JettPosition[2];
+            JettPosition = new JettPosition[10];
 
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 10; i++) {
                 platformsPosition[i] = new PlatformPositon();
                 platformsPosition[i].x = new Random().nextInt(400);
                 platformsPosition[i].y = new Random().nextInt(533);
             }
-
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 10; i++) {
                 platformsPosition2[i] = new PlatformPositon2();
                 platformsPosition2[i].x = new Random().nextInt(400);
                 platformsPosition2[i].y = new Random().nextInt(533);
             }
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 10; i++) {
                 platformsPosition3[i] = new PlatformPositon3();
                 platformsPosition3[i].x = new Random().nextInt(400);
                 platformsPosition3[i].y = new Random().nextInt(533);
             }
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 10; i++) {
                 platformsPosition4[i] = new PlatformPositon4();
                 platformsPosition4[i].x = new Random().nextInt(400);
                 platformsPosition4[i].y = new Random().nextInt(533);
             }
-            for (int i = 0; i < 1; i++) {
+            
+            for (int i = 0; i < 2; i++) {
                 platformsPosition5[i] = new PlatformPositon5();
                 platformsPosition5[i].x = new Random().nextInt(400);
                 platformsPosition5[i].y = new Random().nextInt(533);
             }
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 10; i++) {
                 JettPosition[i] = new JettPosition();
                 JettPosition[i].x = new Random().nextInt(400);
                 JettPosition[i].y = new Random().nextInt(533);
             }
-            health = 145;
-            sc1 = 0;
-            st = 1;
-            y = 100;
+            health = 100;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,18 +189,10 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
         }
         dy += 0.2;
         y += dy;
-//        if (y >= 500) {
-//            sound3 = new SoundPlay2("/Music/dead.wav");
-//            JOptionPane.showMessageDialog(null, "คุณเกมโอเวอร์แล้ว กด OK เพื่อเริ่มใหม่", "Game Over", JOptionPane.WARNING_MESSAGE);
-//            start();
-//            sc1 = 0;
-//            y = 100;
-//            x = 100;
-//            dy = 0;
-//            right = false;
-//            left = false;
-//
-//        }
+        if (y >= 500) {
+//            gameOver();
+
+        }
         if (x <= -30) {
             x = 425;
         }
@@ -208,41 +203,43 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
         //สร้างแพลตฟอร์ม
         if (y < h) {
             sc1++;
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 6; i++) { //แผ่นปกติ
                 y = h;
                 platformsPosition[i].y = platformsPosition[i].y - (int) dy;
                 if (platformsPosition[i].y > 533) {
                     platformsPosition[i].y = 0;
                     platformsPosition[i].x = new Random().nextInt(350);
                 }
-
             }
+            
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++) {  //แผ่นแตก
                 y = h;
                 platformsPosition2[i].y = platformsPosition2[i].y - (int) dy;
                 if (platformsPosition2[i].y > 533) {
                     platformsPosition2[i].y = 0;
-                    platformsPosition2[i].x = new Random().nextInt(350);
+                    platformsPosition2[i].x = new Random().nextInt(400);
                 }
             }
-            for (int i = 0; i < 1; i++) {
+            
+            for (int i = 0; i < 1; i++) { //แผ่นลดเลือด
                 y = h;
                 platformsPosition3[i].y = platformsPosition3[i].y - (int) dy;
                 if (platformsPosition3[i].y > 533) {
                     platformsPosition3[i].y = 0;
-                    platformsPosition3[i].x = new Random().nextInt(350);
+                    platformsPosition3[i].x = new Random().nextInt(400);
                 }
             }
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 3; i++) { //แผ่นไม่โดด
                 y = h;
                 platformsPosition4[i].y = platformsPosition4[i].y - (int) dy;
                 if (platformsPosition4[i].y > 533) {
                     platformsPosition4[i].y = 0;
-                    platformsPosition4[i].x = new Random().nextInt(350);
+                    platformsPosition4[i].x = new Random().nextInt(400);
                 }
             }
-            for (int i = 0; i < 1; i++) {
+            
+            for (int i = 0; i < 2; i++) {
                 y = h;
                 platformsPosition5[i].y = platformsPosition5[i].y - (int) dy;
                 if (platformsPosition5[i].y > 1000) {
@@ -251,37 +248,41 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 }
                 
             }
-            
-            for (int i = 0; i < 1; i++) {
+
+            for (int i = 0; i < 1; i++) { //jet
                 y = h;
                 JettPosition[i].y = JettPosition[i].y - (int) dy;
-                if (JettPosition[i].y > 1400) {
+                if (JettPosition[i].y > 533) {
                     JettPosition[i].y = 0;
-                    JettPosition[i].x = new Random().nextInt(350);
+                    JettPosition[i].x = new Random().nextInt(400);
                 }
             }
+            
         }
 
         //เมื่อเหยียบพื้นธรรมดา
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 6; i++) {
             if ((x + 35 > platformsPosition[i].x)
                     && (x + 35 < platformsPosition[i].x + 68)
-                    && (y + 105 > platformsPosition[i].y + 35)
-                    && (y + 60 < platformsPosition[i].y + 4)
+                    && (y + 70 > platformsPosition[i].y)
+                    && (y + 70 < platformsPosition[i].y + 14)
                     && (dy > 0)) {
                 dy = -10;
                 doodle = doodle2;
                 doodleR = doodleR2;
                 doodleL = doodleL2;
                 sound1 = new SoundPlay1("/Music/jump.wav");
+
             }
         }
+
+            
         //ไอเทม
         for (int i = 0; i < 1; i++) {
             if ((x + 15 > JettPosition[i].x)
                     && (x + 15 < JettPosition[i].x + 68)
-                    && (y + 90 > JettPosition[i].y + 50)
-                    && (y + 50 < JettPosition[i].y + 24)
+                    && (y + 40 > JettPosition[i].y)
+                    && (y + 40 < JettPosition[i].y + 14)
                     && ((dy < 0) || (dy >= 0))) {
                 dy = -40;
                 doodle = doodleJett;
@@ -290,16 +291,18 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 JettPosition[i].y = -100;
                 JettPosition[i].x = -100;
                 sound1 = new SoundPlay1("/Music/jump.wav");
+                
             }
         }
 
         //เมื่อเหยียบพื้นแตก
+
         for (int i = 0; i < 3; i++) {
 
             if ((x + 35 > platformsPosition2[i].x)
                     && (x + 35 < platformsPosition2[i].x + 68)
-                    && (y + 110 > platformsPosition2[i].y + 40)
-                    && (y + 79 < platformsPosition2[i].y + 24)
+                    && (y + 70 > platformsPosition2[i].y)
+                    && (y + 70 < platformsPosition2[i].y + 14)
                     && (dy > 0)) {
                 dy = -8;
                 doodle = doodle2;
@@ -312,27 +315,29 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             }
         }
         
-        //เมื่อเหยียบระบิด
+        //เมื่อเหยียบหนาม
         for (int i = 0; i < 1; i++) {
-
-            if ((x + 35 > platformsPosition5[i].x)
-                    && (x + 35 < platformsPosition5[i].x + 48)
-                    && (y + 80 > platformsPosition5[i].y + 40)
-                    && (y + 65 < platformsPosition5[i].y + 39)
-                    && ((dy < 0) || (dy >= 0))) {
-                dy = -1;
+            
+            if ((x + 35 > platformsPosition3[i].x)
+                    && (x + 35 < platformsPosition3[i].x + 68)
+                    && (y + 60 > platformsPosition3[i].y)
+                    && (y + 60 < platformsPosition3[i].y + 14)
+                    && (dy > 0)) {
+                health -= 80;
+                System.out.println(health);
+                dy = -10;
                 doodle = doodle2;
                 doodleR = doodleR2;
                 doodleL = doodleL2;
-                
-                sound3 = new SoundPlay2("/Music/boomb.wav");
-                JOptionPane.showMessageDialog(null, "คุณเกมโอเวอร์แล้ว กด OK เพื่อเริ่มใหม่", "Game Over", JOptionPane.WARNING_MESSAGE);                  
-                start();
-
+                sound3 = new SoundPlay2("/Music/spike.wav");
+                if(health < -60){
+                    platformsPosition3[i].y = -100;
+                    platformsPosition3[i].x = -100;
+                }
             }
+          
         }
-        
-        //เมื่อเหยียบพื้นล่องหน
+        //เมื่อเหยียบพื้นไม่โดด
         for (int i = 0; i < 3; i++) {
 
             if ((x + 35 > platformsPosition4[i].x)
@@ -351,76 +356,47 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             }
         }
         
-        //เมื่อเหยียบหนาม
         for (int i = 0; i < 1; i++) {
 
-            if ((x + 35 > platformsPosition3[i].x)
-                    && (x + 35 < platformsPosition3[i].x + 68)
-                    && (y + 120 > platformsPosition3[i].y + 60)
-                    && (y + 85 < platformsPosition3[i].y + 39)
-                    && (dy > 0)) {
-                
-//                sound3 = new SoundPlay2("/Music/spike.wav");
-//                doodle = doodle2;
-//                doodleR = doodleR2;
-//                doodleL = doodleL2;
-                
-                if(health > 0){
-                    health -= 50;
-                    dy = -10;
-                    doodle = doodle2;
-                    doodleR = doodleR2;
-                    doodleL = doodleL2;
-                    sound3 = new SoundPlay2("/Music/spike.wav");
-                }else{
-                    sound3 = new SoundPlay2("/Music/dead.wav");
-                    JOptionPane.showMessageDialog(null, "คุณเกมโอเวอร์แล้ว กด OK เพื่อเริ่มใหม่", "Game Over", JOptionPane.WARNING_MESSAGE);                  
-                    start();
-                }
-                
-                
+            if ((x + 35 > platformsPosition5[i].x)
+                    && (x + 35 < platformsPosition5[i].x + 48)
+                    && (y + 80 > platformsPosition5[i].y + 40)
+                    && (y + 65 < platformsPosition5[i].y + 39)
+                    && ((dy < 0) || (dy >= 0))) {
+                dy = -1;
+                doodle = doodle2;
+                doodleR = doodleR2;
+                doodleL = doodleL2;
+                health = -61;
+                sound3 = new SoundPlay2("/Music/boomb.wav");
+                platformsPosition5[i].y = -100;
+                platformsPosition5[i].x = -100;
 
             }
         }
-  
         
-        
-
     }
+
     
-    public void gameOver(){
-            sound3 = new SoundPlay2("/Music/dead.wav");
-            Graphics2D g3 = (Graphics2D) view.getGraphics();
-                 
-            
-            if ((y >= 500)){
-                g3.setColor(new Color(63, 121, 186));
-                g3.fillRect(0, 0, 400, 533); 
-                g3.setColor(Color.BLACK);
-                g3.setFont(new Font("Monospaced", Font.PLAIN, 70));
-                g3.drawString("Game Over", (WIDTH / 2) - 180, (HEIGHT - 50) / 2);
-                g3.setFont(new Font("Monospaced", Font.PLAIN, 30));
-                g3.drawString("Your Score " + sc1, (WIDTH / 2) - 150, (HEIGHT + 60) / 2);
-    //            g3.drawImage(map_end, 0, y - 1000, 700, 2000, null);
-                g3.drawImage(map_end, 0, y + 1000, 700, -2000, null);
-                st = 0;
-                sc1 = 0;
-                y = 100;
-                x = 100;
-                dy = 0;
-                right = false;
-                left = false;
-            }
-            
-
-    }
-
+//    public void gameOver(){
+//            sound3 = new SoundPlay2("/Music/dead.wav");
+//                 
+//            start();
+//            sc1 = 0;
+//            y = 100;
+//            x = 100;
+//            dy = 0;
+//            right = false;
+//            left = false;
+//    }
     public void draw() {
-        Graphics2D g3 = (Graphics2D) view.getGraphics();
         Graphics2D g2 = (Graphics2D) view.getGraphics();
+        Graphics2D g3 = (Graphics2D) view.getGraphics();
         g2.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
         g2.drawImage(doodle, x, y, doodle.getWidth(), doodle.getHeight(), null);
-        for (int i = 0; i < 8; i++) {
+        
+        
+        for (int i = 0; i < 6; i++) {
             g2.drawImage(
                     platform,
                     platformsPosition[i].x,
@@ -430,6 +406,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     null
             );
         }
+
         for (int i = 0; i < 3; i++) {
             g2.drawImage(
                     broke,
@@ -440,7 +417,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     null
             );
         }
-        for (int i = 0; i < 1; i++) {
+        
+        for (int i = 0; i < 1; i++) {  
             g2.drawImage(
                     spike,
                     platformsPosition3[i].x,
@@ -450,7 +428,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     null
             );
         }
-        for (int i = 0; i < 1; i++) {
+        
+        for (int i = 0; i < 3; i++) {
             g2.drawImage(
                     invis,
                     platformsPosition4[i].x,
@@ -460,6 +439,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     null
             );
         }
+
         for (int i = 0; i < 1; i++) {
             g2.drawImage(
                     bomb,
@@ -470,7 +450,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     null
             );
         }
-        for (int i = 0; i < 1; i++) {
+        
+        for (int i = 0; i < 1; i++) { //jet
             g2.drawImage(
                     Jett,
                     JettPosition[i].x,
@@ -480,29 +461,62 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                     null
             );
         }
+        
+        
+        
+        
+        g2.drawImage(topbar, 0, 0, 500, 70, null);
+        g2.drawImage(scoretest, 10, 5, 70, 30, null);
+//        g2.drawString("" + sc1, 120, 20);
+        Font tr = new Font("Berlin Sans FB Demi", Font.PLAIN, 28);
+        g2.setFont(tr);
+        g2.drawImage(topbar, 0, 0, 500, 70, null);
+        g2.drawImage(scoretest, 10, 5, 70, 30, null);
         g2.setColor(Color.black);
-        g2.drawString("score : "+sc1, 15, 15);
+        g2.setColor(Color.red);
+        g2.drawString("" + sc1, 90, 29);
+         
+        if(health >= 65){
+            g2.drawImage(htet1, 310, 13, 65, 17, null);                       
+        }
+        else if(health >= -15 && health < 65){
+            g2.drawImage(htet2, 310, 13, 65, 17, null);           
+        }  
+        else if(health >= -60 && health < -14){            
+            g2.drawImage(htet3, 310, 13, 65, 17, null);      
+        }
+        else if(health < -60){
+            g2.drawImage(htet4, 310, 13, 65, 17, null);
+            //gameOver();
+        }       
+ 
         
-        g2.drawImage(heart,10,23,30,25,null);
-        g2.setStroke(new BasicStroke(16.0f));
-	g2.setColor(new Color(241, 98, 69));
-        g2.drawLine(50,35,60+health,35);	
-	g2.setColor(Color.white);
-	g2.setStroke(new BasicStroke(5.0f));
-        g2.drawRect(40,25,170,20);
         
-        if ((y >= 500)){
+        if ((y >= 500) || (health < -60)){
             g3.setColor(new Color(63, 121, 186));
             g3.fillRect(0, 0, 400, 533); 
+            sc2 = sc1;
             g3.setColor(Color.BLACK);
             g3.setFont(new Font("Monospaced", Font.PLAIN, 70));
             g3.drawString("Game Over", (WIDTH / 2) - 180, (HEIGHT - 50) / 2);
             g3.setFont(new Font("Monospaced", Font.PLAIN, 30));
-            g3.drawString("Your Score " + sc1, (WIDTH / 2) - 150, (HEIGHT + 60) / 2);
-//            g3.drawImage(map_end, 0, y - 1000, 700, 2000, null);
+            g3.drawString("Your Score " + sc2, (WIDTH / 2) - 150, (HEIGHT + 60) / 2);
             g3.drawImage(map_end, 0, y + 1000, 700, -2000, null);
             st = 0;
+            x = 420;
+            right = false;
+            left = false;
+            
         }
+        
+        
+//        g2.drawImage(heart, 10, 60, 30, 25, null);
+//        g2.setStroke(new BasicStroke(16.0f));
+//	g2.setColor(new Color(241, 98, 69));
+//        g2.drawLine(50, 60, 60 + health, 60);	
+//	g2.setColor(Color.white);
+//	g2.setStroke(new BasicStroke(5.0f));
+//        g2.drawRect(40, 60, 170 ,20);
         
         Graphics g = getGraphics();
         g.drawImage(view, 0, 0, WIDTH, HEIGHT, null);
@@ -519,21 +533,21 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 update();
                 draw();
                 if(sc1 > 0 && sc1 <= 800){
-                    Thread.sleep(1000 / 60);
+                    Thread.sleep(800 / 60);
                 }
                 
                 else if(sc1 >= 801){
-                    Thread.sleep(900 / 60);
+                    Thread.sleep(700 / 60);
                     
                 }
                 else if(sc1 >= 1300){
-                    Thread.sleep(800 / 60);
+                    Thread.sleep(650 / 60);
                 }
                 else if(sc1 >= 1700){
-                    Thread.sleep(700 / 60);
+                    Thread.sleep(600 / 60);
                 }
                 else if(sc1 >= 2000){
-                    Thread.sleep(600 / 60);
+                    Thread.sleep(550 / 60);
                 }
                 else if(sc1 >= 2500){
                     Thread.sleep(500 / 60);
@@ -558,20 +572,6 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             left = true;
             doodle = doodleL;
         }
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            if(st == 0){
-                start();
-                sc1 = 0;
-                y = 100;
-                x = 100;
-                dy = 0;
-                right = false;
-                left = false;
-            }
-
-            
-        }
-
     }
 
     @Override
@@ -582,12 +582,24 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             left = false;
         }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            if(st == 0){
+                start();
+                st = 1;
+                sc1 = 0;
+                y = 100;
+                x = 100;
+                dy = 0;
+                right = false;
+                left = false;
+            }
+            
+        }
     }
 
     
     @Override
     public void keyTyped(KeyEvent ke) {
+        
     }
-    
-
 }
