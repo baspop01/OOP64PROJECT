@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 public class display extends DoodleJump{
 
     public display() {
-        JFrame w = new JFrame("Doodle Jump");
+        JFrame w = new JFrame("Squid Jump");
         w.setResizable(false);
         w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         w.setLayout(new BorderLayout());

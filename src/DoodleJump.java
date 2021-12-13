@@ -56,7 +56,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
 //    AudioClip sound; //new
     boolean isRunning;
     Thread thread;
-    BufferedImage view, background, platform, doodle, broke,spike,invis, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2, doodleL2, heart, topbar, scoretest, htet1, htet2, htet3, htet4, bomb, map_end;
+    BufferedImage view, background, platform, doodle, broke,spike,invis, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2
+            , doodleL2, heart, topbar, scoretest, htet1, htet2, htet3, htet4, bomb, map_end, startgame;
 
     PlatformPositon[] platformsPosition;
     PlatformPositon2[] platformsPosition2;
@@ -129,6 +130,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             htet3 = ImageIO.read(getClass().getResource("/Img/testh3.png"));
             bomb = ImageIO.read(getClass().getResource("/Img/bomb.png"));
             map_end = ImageIO.read(getClass().getResource("/Img/map_end.jpg"));
+            startgame = ImageIO.read(getClass().getResource("/Img/startgame.png"));
 
             platformsPosition = new PlatformPositon[20];
 
@@ -486,12 +488,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                         //gameOver();
         } 
         }else{
-            g3.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
-            g3.setColor(Color.WHITE);
-            g3.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 50));
-            g3.drawString("SQUID JUMP", (WIDTH / 2) - 130, (HEIGHT - 100) / 2);
-            g3.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 25));
-            g3.drawString("Press 'space' to play", (WIDTH / 2) - 110, (HEIGHT + 0) / 2);
+            g3.drawImage(startgame, 0, 0, WIDTH, HEIGHT, null);
             x = 100;
             y = 100;
             dy = 0;
