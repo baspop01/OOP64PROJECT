@@ -4,28 +4,35 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public class Image {
-    public static BufferedImage Startgame;
-    public static BufferedImage map, map_end;
-    public static BufferedImage carzing;
-    public static BufferedImage kraba ,bg;
-    public static BufferedImage life1, life1Red;
-    public static BufferedImage life2,life2Red;
-    public static BufferedImage life3,life3Red;
+   
+    public static BufferedImage view, background, platform, doodle, broke,spike,invis, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2
+            , doodleL2, heart, topbar, scoretest, htet1, htet2, htet3, htet4, bomb, map_end, startgame;
 
     public Image() {
         try {
-            Startgame = ImageIO.read(getClass().getResource("/Img/StartGame.png"));
-            map = ImageIO.read(getClass().getResource("/Img/street.png"));
-            map_end = ImageIO.read(getClass().getResource("/Img/street_end.png"));
-            carzing = ImageIO.read(getClass().getResource("/Img/carzing.png"));
-            kraba = ImageIO.read(getClass().getResource("/Img/Kraba.png"));
-            life1 = ImageIO.read(getClass().getResource("/Img/engine.png"));
-            life2 = ImageIO.read(getClass().getResource("/Img/shock.png"));
-            life3 = ImageIO.read(getClass().getResource("/Img/wheel.png"));
-            life1Red = ImageIO.read(getClass().getResource("/Img/engine_red.png"));
-            life2Red = ImageIO.read(getClass().getResource("/Img/shock_red.png"));
-            life3Red = ImageIO.read(getClass().getResource("/Img/wheel_red.png"));
-            bg = ImageIO.read(getClass().getResource("backgroud.png"));
+            background = ImageIO.read(getClass().getResource("/Img/background.png"));
+            platform = ImageIO.read(getClass().getResource("/Img/platform.png"));
+            doodle = ImageIO.read(getClass().getResource("/Img/doodle1.png"));
+            doodle2 = ImageIO.read(getClass().getResource("/Img/doodle1.png"));
+            broke = ImageIO.read(getClass().getResource("/Img/platform1.png"));
+            spike = ImageIO.read(getClass().getResource("/Img/platform2.png"));
+            invis = ImageIO.read(getClass().getResource("/Img/platform3.png"));
+            doodleL = ImageIO.read(getClass().getResource("/Img/doodleleft1.png"));
+            doodleR = ImageIO.read(getClass().getResource("/Img/doodleright1.png"));
+            doodleL2 = ImageIO.read(getClass().getResource("/Img/doodleleft1.png"));
+            doodleR2 = ImageIO.read(getClass().getResource("/Img/doodleright1.png"));
+            doodleJett = ImageIO.read(getClass().getResource("/Img/doodlejett.png"));
+            Jett = ImageIO.read(getClass().getResource("/Img/jettpack.png"));
+            topbar = ImageIO.read(getClass().getResource("/Img/topbar.png"));
+            scoretest = ImageIO.read(getClass().getResource("/Img/sctest1.png"));
+            htet4 = ImageIO.read(getClass().getResource("/Img/testh.png")); 
+            htet1 = ImageIO.read(getClass().getResource("/Img/testh1.png"));
+            htet2 = ImageIO.read(getClass().getResource("/Img/testh2.png"));
+            htet3 = ImageIO.read(getClass().getResource("/Img/testh3.png"));
+            bomb = ImageIO.read(getClass().getResource("/Img/bomb.png"));
+            map_end = ImageIO.read(getClass().getResource("/Img/map_end.jpg"));
+            startgame = ImageIO.read(getClass().getResource("/Img/startgame.png"));
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }

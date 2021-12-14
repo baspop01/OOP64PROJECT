@@ -10,27 +10,27 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 
-class PlatformPositon {
+class Platform { //ปกติ
 
     int x, y;
 }
 
-class PlatformPositon2 {
+class PlatformBroke { //แตก
 
     int x, y;
 }
 
-class PlatformPositon3 {
+class PlatformSpike { //หนาม
 
     int x, y;
 }
 
-class PlatformPositon4 { //เธ�เธทเน�เธ�เธ�เน�เธฒ
+class PlatformUn { //ไม่โดด
 
     int x, y;
 }
 
-class PlatformPositon5 {
+class PlatformBomb { //ระเบิด
 
     int x, y;
 }
@@ -58,12 +58,13 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
     Thread thread;
     BufferedImage view, background, platform, doodle, broke,spike,invis, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2
             , doodleL2, heart, topbar, scoretest, htet1, htet2, htet3, htet4, bomb, map_end, startgame;
-
-    PlatformPositon[] platformsPosition;
-    PlatformPositon2[] platformsPosition2;
-    PlatformPositon3[] platformsPosition3;
-    PlatformPositon4[] platformsPosition4;
-    PlatformPositon5[] platformsPosition5;
+    
+    
+    Platform[] platforms;
+    PlatformBroke[] platformsBroke;
+    PlatformSpike[] platformsSpike;
+    PlatformUn[] platformsUn;
+    PlatformBomb[] platformsBomb;
     JettPosition[] JettPosition;
 
     int x = 100, y = 100, h = 150, sc1 = 0,health = 100, st=0, sc2=0, high=0, check=0;
@@ -132,43 +133,43 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             map_end = ImageIO.read(getClass().getResource("/Img/map_end.jpg"));
             startgame = ImageIO.read(getClass().getResource("/Img/startgame.png"));
 
-            platformsPosition = new PlatformPositon[20];
+            platforms = new Platform[20];
 
-            platformsPosition2 = new PlatformPositon2[20];
+            platformsBroke = new PlatformBroke[20];
             
-            platformsPosition3 = new PlatformPositon3[20];
+            platformsSpike = new PlatformSpike[20];
             
-            platformsPosition4 = new PlatformPositon4[20];
+            platformsUn = new PlatformUn[20];
             
-            platformsPosition5 = new PlatformPositon5[3];
+            platformsBomb = new PlatformBomb[3];
 
             JettPosition = new JettPosition[10];
 
             for (int i = 0; i < 10; i++) {
-                platformsPosition[i] = new PlatformPositon();
-                platformsPosition[i].x = new Random().nextInt(400);
-                platformsPosition[i].y = new Random().nextInt(533);
+                platforms[i] = new Platform();
+                platforms[i].x = new Random().nextInt(400);
+                platforms[i].y = new Random().nextInt(533);
             }
             for (int i = 0; i < 10; i++) {
-                platformsPosition2[i] = new PlatformPositon2();
-                platformsPosition2[i].x = new Random().nextInt(400);
-                platformsPosition2[i].y = new Random().nextInt(533);
+                platformsBroke[i] = new PlatformBroke();
+                platformsBroke[i].x = new Random().nextInt(400);
+                platformsBroke[i].y = new Random().nextInt(533);
             }
             for (int i = 0; i < 10; i++) {
-                platformsPosition3[i] = new PlatformPositon3();
-                platformsPosition3[i].x = new Random().nextInt(400);
-                platformsPosition3[i].y = new Random().nextInt(533);
+                platformsSpike[i] = new PlatformSpike();
+                platformsSpike[i].x = new Random().nextInt(400);
+                platformsSpike[i].y = new Random().nextInt(533);
             }
             for (int i = 0; i < 10; i++) {
-                platformsPosition4[i] = new PlatformPositon4();
-                platformsPosition4[i].x = new Random().nextInt(400);
-                platformsPosition4[i].y = new Random().nextInt(533);
+                platformsUn[i] = new PlatformUn();
+                platformsUn[i].x = new Random().nextInt(400);
+                platformsUn[i].y = new Random().nextInt(533);
             }
             
             for (int i = 0; i < 2; i++) {
-                platformsPosition5[i] = new PlatformPositon5();
-                platformsPosition5[i].x = new Random().nextInt(400);
-                platformsPosition5[i].y = new Random().nextInt(533);
+                platformsBomb[i] = new PlatformBomb();
+                platformsBomb[i].x = new Random().nextInt(400);
+                platformsBomb[i].y = new Random().nextInt(533);
             }
             for (int i = 0; i < 10; i++) {
                 JettPosition[i] = new JettPosition();
@@ -184,7 +185,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
 
     public void update() {
 
-        //เน€เธ�เธตเน�เธขเธงเธ�เธฑเธ�เธ•เธณเน�เธซเธ�เน�เธ�เธ•เธฑเธงเธฅเธฐเธ�เธฃ
+        //ตำแหน่งตัวละคร
         if (right) {
             x += 3;
         } else if (left) {
@@ -199,51 +200,51 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             x = -20;
         }
 
-        //เธชเธฃเน�เธฒเธ�เน�เธ�เธฅเธ•เธ�เธญเธฃเน�เธก
+        //พื้น
         if (y < h) {
             sc1++;
-            for (int i = 0; i < 6; i++) { //เน�เธ�เน�เธ�เธ�เธ�เธ•เธด
+            for (int i = 0; i < 6; i++) { //ปกติ
                 y = h;
-                platformsPosition[i].y = platformsPosition[i].y - (int) dy;
-                if (platformsPosition[i].y > 533) {
-                    platformsPosition[i].y = 0;
-                    platformsPosition[i].x = new Random().nextInt(350);
+                platforms[i].y = platforms[i].y - (int) dy;
+                if (platforms[i].y > 533) {
+                    platforms[i].y = 0;
+                    platforms[i].x = new Random().nextInt(350);
                 }
             }
             
 
-            for (int i = 0; i < 3; i++) {  //เน�เธ�เน�เธ�เน�เธ•เธ�
+            for (int i = 0; i < 3; i++) {  //แตก
                 y = h;
-                platformsPosition2[i].y = platformsPosition2[i].y - (int) dy;
-                if (platformsPosition2[i].y > 533) {
-                    platformsPosition2[i].y = 0;
-                    platformsPosition2[i].x = new Random().nextInt(400);
+                platformsBroke[i].y = platformsBroke[i].y - (int) dy;
+                if (platformsBroke[i].y > 533) {
+                    platformsBroke[i].y = 0;
+                    platformsBroke[i].x = new Random().nextInt(400);
                 }
             }
             
-            for (int i = 0; i < 1; i++) { //เน�เธ�เน�เธ�เธฅเธ”เน€เธฅเธทเธญเธ”
+            for (int i = 0; i < 1; i++) { //หนาม
                 y = h;
-                platformsPosition3[i].y = platformsPosition3[i].y - (int) dy;
-                if (platformsPosition3[i].y > 533) {
-                    platformsPosition3[i].y = 0;
-                    platformsPosition3[i].x = new Random().nextInt(400);
+                platformsSpike[i].y = platformsSpike[i].y - (int) dy;
+                if (platformsSpike[i].y > 533) {
+                    platformsSpike[i].y = 0;
+                    platformsSpike[i].x = new Random().nextInt(400);
                 }
             }
-            for (int i = 0; i < 3; i++) { //เน�เธ�เน�เธ�เน�เธกเน�เน�เธ”เธ”
+            for (int i = 0; i < 3; i++) { //ไม่โดด
                 y = h;
-                platformsPosition4[i].y = platformsPosition4[i].y - (int) dy;
-                if (platformsPosition4[i].y > 533) {
-                    platformsPosition4[i].y = 0;
-                    platformsPosition4[i].x = new Random().nextInt(400);
+                platformsUn[i].y = platformsUn[i].y - (int) dy;
+                if (platformsUn[i].y > 533) {
+                    platformsUn[i].y = 0;
+                    platformsUn[i].x = new Random().nextInt(400);
                 }
             }
             
             for (int i = 0; i < 2; i++) {
                 y = h;
-                platformsPosition5[i].y = platformsPosition5[i].y - (int) dy;
-                if (platformsPosition5[i].y > 1000) {
-                    platformsPosition5[i].y = 0;
-                    platformsPosition5[i].x = new Random().nextInt(350);
+                platformsBomb[i].y = platformsBomb[i].y - (int) dy;
+                if (platformsBomb[i].y > 1000) {
+                    platformsBomb[i].y = 0;
+                    platformsBomb[i].x = new Random().nextInt(350);
                 }
                 
             }
@@ -259,12 +260,12 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             
         }
 
-        //เน€เธกเธทเน�เธญเน€เธซเธขเธตเธขเธ�เธ�เธทเน�เธ�เธ�เธฃเธฃเธกเธ”เธฒ
+        //เหยียบปกติ
         for (int i = 0; i < 6; i++) {
-            if ((x + 35 > platformsPosition[i].x)
-                    && (x + 35 < platformsPosition[i].x + 68)
-                    && (y + 70 > platformsPosition[i].y)
-                    && (y + 70 < platformsPosition[i].y + 14)
+            if ((x + 35 > platforms[i].x)
+                    && (x + 35 < platforms[i].x + 68)
+                    && (y + 70 > platforms[i].y)
+                    && (y + 70 < platforms[i].y + 14)
                     && (dy > 0)) {
                 dy = -10;
                 doodle = doodle2;
@@ -276,7 +277,7 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
         }
 
             
-        //เน�เธญเน€เธ—เธก
+        //เหยียบไอเทม
         for (int i = 0; i < 1; i++) {
             if ((x + 15 > JettPosition[i].x)
                     && (x + 15 < JettPosition[i].x + 68)
@@ -294,33 +295,33 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             }
         }
 
-        //เน€เธกเธทเน�เธญเน€เธซเธขเธตเธขเธ�เธ�เธทเน�เธ�เน�เธ•เธ�
-
+        
+        //เหยียบแตก
         for (int i = 0; i < 3; i++) {
 
-            if ((x + 35 > platformsPosition2[i].x)
-                    && (x + 35 < platformsPosition2[i].x + 68)
-                    && (y + 70 > platformsPosition2[i].y)
-                    && (y + 70 < platformsPosition2[i].y + 14)
+            if ((x + 35 > platformsBroke[i].x)
+                    && (x + 35 < platformsBroke[i].x + 68)
+                    && (y + 70 > platformsBroke[i].y)
+                    && (y + 70 < platformsBroke[i].y + 14)
                     && (dy > 0)) {
                 dy = -8;
                 doodle = doodle2;
                 doodleR = doodleR2;
                 doodleL = doodleL2;
-                platformsPosition2[i].y = -100;
-                platformsPosition2[i].x = -100;
+                platformsBroke[i].y = -100;
+                platformsBroke[i].x = -100;
                 sound2 = new SoundPlay2("/Music/broke.wav");
 
             }
         }
         
-        //เน€เธกเธทเน�เธญเน€เธซเธขเธตเธขเธ�เธซเธ�เธฒเธก
+        //เหยียบหนาม
         for (int i = 0; i < 1; i++) {
             
-            if ((x + 35 > platformsPosition3[i].x)
-                    && (x + 35 < platformsPosition3[i].x + 68)
-                    && (y + 60 > platformsPosition3[i].y)
-                    && (y + 60 < platformsPosition3[i].y + 14)
+            if ((x + 35 > platformsSpike[i].x)
+                    && (x + 35 < platformsSpike[i].x + 68)
+                    && (y + 60 > platformsSpike[i].y)
+                    && (y + 60 < platformsSpike[i].y + 14)
                     && (dy > 0)) {
                 health -= 80;
                 System.out.println(health);
@@ -330,37 +331,37 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 doodleL = doodleL2;
                 sound3 = new SoundPlay2("/Music/spike.wav");
                 if(health < -60){
-                    platformsPosition3[i].y = -100;
-                    platformsPosition3[i].x = -100;
+                    platformsSpike[i].y = -100;
+                    platformsSpike[i].x = -100;
                 }
             }
           
         }
-        //เน€เธกเธทเน�เธญเน€เธซเธขเธตเธขเธ�เธ�เธทเน�เธ�เน�เธกเน�เน�เธ”เธ”
+        //เหยียบไม่โดด
         for (int i = 0; i < 3; i++) {
 
-            if ((x + 35 > platformsPosition4[i].x)
-                    && (x + 35 < platformsPosition4[i].x + 68)
-                    && (y + 150 > platformsPosition4[i].y + 80)
-                    && (y + 60 < platformsPosition4[i].y + 4)
+            if ((x + 35 > platformsUn[i].x)
+                    && (x + 35 < platformsUn[i].x + 68)
+                    && (y + 150 > platformsUn[i].y + 80)
+                    && (y + 60 < platformsUn[i].y + 4)
                     && (dy > 0)) {
                 dy = -1;
                 doodle = doodle2;
                 doodleR = doodleR2;
                 doodleL = doodleL2;
-                platformsPosition4[i].y = -100;
-                platformsPosition4[i].x = -100;
+                platformsUn[i].y = -100;
+                platformsUn[i].x = -100;
                 sound2 = new SoundPlay2("/Music/broke.wav");
 
             }
         }
-        
+        //เหยียบระเบิด
         for (int i = 0; i < 1; i++) {
 
-            if ((x + 35 > platformsPosition5[i].x)
-                    && (x + 35 < platformsPosition5[i].x + 48)
-                    && (y + 80 > platformsPosition5[i].y + 40)
-                    && (y + 65 < platformsPosition5[i].y + 39)
+            if ((x + 35 > platformsBomb[i].x)
+                    && (x + 35 < platformsBomb[i].x + 48)
+                    && (y + 80 > platformsBomb[i].y + 40)
+                    && (y + 65 < platformsBomb[i].y + 39)
                     && ((dy < 0) || (dy >= 0))) {
                 dy = -1;
                 doodle = doodle2;
@@ -368,8 +369,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
                 doodleL = doodleL2;
                 health = -61;
                 sound3 = new SoundPlay2("/Music/boomb.wav");
-                platformsPosition5[i].y = -100;
-                platformsPosition5[i].x = -100;
+                platformsBomb[i].y = -100;
+                platformsBomb[i].x = -100;
 
             }
         }
@@ -397,8 +398,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             for (int i = 0; i < 6; i++) {
             g2.drawImage(
                     platform,
-                    platformsPosition[i].x,
-                    platformsPosition[i].y,
+                    platforms[i].x,
+                    platforms[i].y,
                     platform.getWidth(),
                     platform.getHeight(),
                     null
@@ -408,8 +409,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             for (int i = 0; i < 3; i++) {
                 g2.drawImage(
                         broke,
-                        platformsPosition2[i].x,
-                        platformsPosition2[i].y,
+                        platformsBroke[i].x,
+                        platformsBroke[i].y,
                         broke.getWidth(),
                         broke.getHeight(),
                         null
@@ -419,8 +420,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             for (int i = 0; i < 1; i++) {  
                 g2.drawImage(
                         spike,
-                        platformsPosition3[i].x,
-                        platformsPosition3[i].y,
+                        platformsSpike[i].x,
+                        platformsSpike[i].y,
                         spike.getWidth(),
                         spike.getHeight(),
                         null
@@ -430,8 +431,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             for (int i = 0; i < 3; i++) {
                 g2.drawImage(
                         invis,
-                        platformsPosition4[i].x,
-                        platformsPosition4[i].y,
+                        platformsUn[i].x,
+                        platformsUn[i].y,
                         invis.getWidth(),
                         invis.getHeight(),
                         null
@@ -441,8 +442,8 @@ public class DoodleJump extends JPanel implements Runnable, KeyListener {
             for (int i = 0; i < 1; i++) {
                 g2.drawImage(
                         bomb,
-                        platformsPosition5[i].x,
-                        platformsPosition5[i].y,
+                        platformsBomb[i].x,
+                        platformsBomb[i].y,
                         bomb.getWidth(),
                         bomb.getHeight(),
                         null
