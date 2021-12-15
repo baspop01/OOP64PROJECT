@@ -12,32 +12,32 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 
-class Platform { //เธ�เธ�เธ•เธด
+class Platform { //พื้นธรรมดา
 
     int x, y;
 }
 
-class PlatformBroke { //เน�เธ•เธ�
+class PlatformBroke { //พื้นไม้
 
     int x, y;
 }
 
-class PlatformSpike { //เธซเธ�เธฒเธก
+class PlatformSpike { //พื้นหนาม
 
     int x, y;
 }
 
-class PlatformUn { //เน�เธกเน�เน�เธ”เธ”
+class PlatformUn { //พื้นหญ้า
 
     int x, y;
 }
 
-class PlatformBomb { //เธฃเธฐเน€เธ�เธดเธ”
+class PlatformBomb { //ระเบิด
 
     int x, y;
 }
 
-class JettPosition {
+class JettPosition { //เจ็ท
 
     int x, y;
 }
@@ -54,8 +54,6 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
     SoundPlay2 sound4;
     SoundPlay1 sound5;
 
-//    File wavFile = new File("C:\\Users\\hp\\Documents\\NetBeansProjects\\project\\src\\Music\\mystery.wav"); //new
-//    AudioClip sound; //new
     boolean isRunning;
     Thread thread;
     BufferedImage view, background, platform, doodle, broke,spike,invis, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2
@@ -87,28 +85,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             thread.start();
         }
     }
-
-//    public void audio(){ //new
-//        try{
-//            sound = Applet.newAudioClip(wavFile.toURL());
-//        }
-//        catch(Exception e){
-//            e.printStackTrace();
-//        }
-//        sound.loop();
-//        
-////        sound.play();
-//        
-////        if(test == 0){
-////            sound.loop();
-////        }
-////        else{
-////            sound.stop();
-////            System.out.println("test");         
-////        }  
-//    } //new
-    public void start() {
-//        audio(); //new      
+    public void start() {    
         try {
             view = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
@@ -187,7 +164,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
 
     public void update() {
 
-        //เธ•เธณเน�เธซเธ�เน�เธ�เธ•เธฑเธงเธฅเธฐเธ�เธฃ
+        //เกี่ยวกับตพแหน่งตัวละคร
         if (right) {
             x += 3;
         } else if (left) {
@@ -202,10 +179,10 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             x = -20;
         }
 
-        //เธ�เธทเน�เธ�
+        //เกี่ยวกับการสร้างพื้นใหม่เมื่อกระโดดสูงขึ้นไป
         if (y < h) {
             sc1++;
-            for (int i = 0; i < 6; i++) { //เธ�เธ�เธ•เธด
+            for (int i = 0; i < 6; i++) { //สร้างพื้น
                 y = h;
                 platforms[i].y = platforms[i].y - (int) dy;
                 if (platforms[i].y > 533) {
@@ -215,7 +192,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             }
             
 
-            for (int i = 0; i < 3; i++) {  
+            for (int i = 0; i < 3; i++) {  //สร้างพื้นไม้
                 y = h;
                 platformsBroke[i].y = platformsBroke[i].y - (int) dy;
                 if (platformsBroke[i].y > 533) {
@@ -224,7 +201,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                 }
             }
             
-            for (int i = 0; i < 1; i++) { //spike
+            for (int i = 0; i < 1; i++) { //สร้างพื้นหนาม
                 y = h;
                 platformsSpike[i].y = platformsSpike[i].y - (int) dy;
                 if (platformsSpike[i].y > 533) {
@@ -232,7 +209,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                     platformsSpike[i].x = new Random().nextInt(400);
                 }
             }
-            for (int i = 0; i < 3; i++) { 
+            for (int i = 0; i < 3; i++) { //สร้างหญ้า
                 y = h;
                 platformsUn[i].y = platformsUn[i].y - (int) dy;
                 if (platformsUn[i].y > 533) {
@@ -241,7 +218,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                 }
             }
             
-            for (int i = 0; i < 2; i++) { //bomb
+            for (int i = 0; i < 2; i++) { //สร้างระเบิด
                 y = h;
                 platformsBomb[i].y = platformsBomb[i].y - (int) dy;
                 if (platformsBomb[i].y > 1000) {
@@ -251,7 +228,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                 
             }
 
-            for (int i = 0; i < 1; i++) { //jet
+            for (int i = 0; i < 1; i++) { //สร้างเจ็ท
                 y = h;
                 JettPosition[i].y = JettPosition[i].y - (int) dy;
                 if (JettPosition[i].y > 2500) {
@@ -262,7 +239,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             
         }
 
-        //เน€เธซเธขเธตเธขเธ�เธ�เธ�เธ•เธด
+        //เกี่ยวกับ Hitbox 
         for (int i = 0; i < 6; i++) {
             if ((x + 35 > platforms[i].x)
                     && (x + 35 < platforms[i].x + 68)
@@ -279,7 +256,6 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
         }
 
             
-        //เน€เธซเธขเธตเธขเธ�เน�เธญเน€เธ—เธก
         for (int i = 0; i < 1; i++) {
             if ((x + 15 > JettPosition[i].x)
                     && (x + 15 < JettPosition[i].x + 68)
@@ -298,7 +274,6 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
         }
 
         
-        //เน€เธซเธขเธตเธขเธ�เน�เธ•เธ�
         for (int i = 0; i < 3; i++) {
 
             if ((x + 35 > platformsBroke[i].x)
@@ -317,7 +292,6 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             }
         }
         
-        //เน€เธซเธขเธตเธขเธ�เธซเธ�เธฒเธก
         for (int i = 0; i < 1; i++) {
             
             if ((x + 35 > platformsSpike[i].x)
@@ -339,7 +313,6 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             }
           
         }
-        //เน€เธซเธขเธตเธขเธ�เน�เธกเน�เน�เธ”เธ”
         for (int i = 0; i < 3; i++) {
 
             if ((x + 35 > platformsUn[i].x)
@@ -357,7 +330,6 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
 
             }
         }
-        //เน€เธซเธขเธตเธขเธ�เธฃเธฐเน€เธ�เธดเธ”
         for (int i = 0; i < 1; i++) {
 
             if ((x + 35 > platformsBomb[i].x)
@@ -378,21 +350,10 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
         }
         
     }
-
-    
-//    public void gameOver(){
-//            sound3 = new SoundPlay2("/Music/dead.wav");
-//                 
-//            start();
-//            sc1 = 0;
-//            y = 100;
-//            x = 100;
-//            dy = 0;
-//            right = false;
-//            left = false;
-//    }
+    //สร้างGraphic
     public void draw() {
         Graphics2D g3 = (Graphics2D) view.getGraphics();
+        //สร้างตัวเกม
         if (check == 1){
             Graphics2D g2 = (Graphics2D) view.getGraphics();
             g2.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
@@ -468,7 +429,6 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
         
                     g2.drawImage(topbar, 0, 0, 500, 70, null);
                     g2.drawImage(scoretop, 10, 5, 70, 30, null);
-            //        g2.drawString("" + sc1, 120, 20);
                     Font tr = new Font("Berlin Sans FB Demi", Font.PLAIN, 28);
                     g2.setFont(tr);
                     g2.drawImage(topbar, 0, 0, 500, 70, null);
@@ -490,16 +450,14 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                         g2.drawImage(heart0, 310, 13, 65, 17, null);
                         //gameOver();
         } 
+        //สร้างหน้าแรกของเกม
         }else{
             g3.drawImage(startgame, 0, 0, WIDTH, HEIGHT, null);
             x = 100;
             y = 100;
             dy = 0;
         }
-             
- 
-        
-        
+        //สร้างหน้าเกม Over
         if ((y >= 500) || (health < -60)){
             g3.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
             sc2 = sc1;
@@ -527,17 +485,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             }
             right = false;
             left = false;
-        }
-        
-        
-//        g2.drawImage(heart, 10, 60, 30, 25, null);
-//        g2.setStroke(new BasicStroke(16.0f));
-//	g2.setColor(new Color(241, 98, 69));
-//        g2.drawLine(50, 60, 60 + health, 60);	
-//	g2.setColor(Color.white);
-//	g2.setStroke(new BasicStroke(5.0f));
-//        g2.drawRect(40, 60, 170 ,20);
-        
+        }        
         Graphics g = getGraphics();
         g.drawImage(view, 0, 0, WIDTH, HEIGHT, null);
         g.dispose();

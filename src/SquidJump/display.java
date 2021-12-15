@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class display extends SquidJump{
+public class display{
 
     public display() {
         JFrame w = new JFrame("Squid Jump");
