@@ -14,61 +14,61 @@ import java.io.File;
 
 class Platform { //พื้นธรรมดา
 
-    public int x, y;
+    int x, y;
 }
 
 class PlatformBroke { //พื้นไม้
 
-    public int x, y;
+    int x, y;
 }
 
 class PlatformSpike { //พื้นหนาม
 
-    public int x, y;
+    int x, y;
 }
 
 class PlatformUn { //พื้นหญ้า
 
-    public int x, y;
+    int x, y;
 }
 
 class PlatformBomb { //ระเบิด
 
-    public int x, y;
+    int x, y;
 }
 
 class JettPosition { //เจ็ท
 
-    public int x, y;
+    int x, y;
 }
 
 public class SquidJump extends JPanel implements Runnable, KeyListener {
 
-    public final int WIDTH = 400;
-    public final int HEIGHT = 533;
+    final int WIDTH = 400;
+    final int HEIGHT = 533;
 
-    public SoundPlay1 sound1;
-    public SoundPlay2 sound2;
-    public SoundPlay2 sound3;
-    public SoundPlay2 sound4;
-    public SoundPlay1 sound5;
+    SoundPlay1 sound1;
+    SoundPlay2 sound2;
+    SoundPlay2 sound3;
+    SoundPlay2 sound4;
+    SoundPlay1 sound5;
 
     boolean isRunning;
-    public Thread thread;
-    public BufferedImage view, background, platform, doodle, broke,spike,invis, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2
+    Thread thread;
+    BufferedImage view, background, platform, doodle, broke,spike,invis, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2
             , doodleL2, heart, topbar, scoretop, bomb, map_end, startgame, heart0, heart1, heart2, heart3;
     
     
-    public Platform[] platforms;
-    public PlatformBroke[] platformsBroke;
-    public PlatformSpike[] platformsSpike;
-    public PlatformUn[] platformsUn;
-    public PlatformBomb[] platformsBomb;
-    public JettPosition[] JettPosition;
+    Platform[] platforms;
+    PlatformBroke[] platformsBroke;
+    PlatformSpike[] platformsSpike;
+    PlatformUn[] platformsUn;
+    PlatformBomb[] platformsBomb;
+    JettPosition[] JettPosition;
 
-    public int x = 100, y = 100, h = 150, sc1 = 0,health = 100, st=0, sc2=0, high=0, check=0, count=0;
-    public float dy = (int) (Math.random());
-    public boolean right, left;
+    int x = 100, y = 100, h = 150, sc1 = 0,health = 100, st=0, sc2=0, high=0, check=0, count=0;
+    float dy = (int) (Math.random());
+    boolean right, left;
 
     public SquidJump() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
