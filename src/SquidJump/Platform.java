@@ -10,12 +10,7 @@ import javax.imageio.ImageIO;
 public class Platform {
     public int x, y;
 
-    Platform[] platforms;
-    Platform[] platformsBroke;
-    Platform[] platformsSpike;
-    Platform[] platformsUn;
-    Platform[] platformsBomb;
-    Platform[] JettPosition;
+    private Platform[] platforms, platformsBroke, platformsSpike, platformsUn, platformsBomb, JettPosition;
     
     BufferedImage platform, broke, spike, grass, Jett, bomb;
 
@@ -42,7 +37,7 @@ public class Platform {
                 System.out.println("Can't load player Left");
             }
     }
-public void randomPlatform(){
+    public void randomPlatform(){
                 for (int i = 0; i < 10; i++) {
                 platforms[i] = new Platform();
                 platforms[i].x = new Random().nextInt(400);
@@ -67,7 +62,7 @@ public void randomPlatform(){
                 platformsBomb[i].y = new Random().nextInt(533);
             }
 }
- public void draw(Graphics g){
+    public void draw(Graphics g){
             for (int i = 0; i < 6; i++) {
             g.drawImage(
                     platform,
@@ -133,5 +128,52 @@ public void randomPlatform(){
                         null
                 );
         }
+    }
+        public Platform[] getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(Platform[] platforms) {
+        this.platforms = platforms;
+    }
+
+    public Platform[] getPlatformsBroke() {
+        return platformsBroke;
+    }
+
+    public void setPlatformsBroke(Platform[] platformsBroke) {
+        this.platformsBroke = platformsBroke;
+    }
+
+    public Platform[] getPlatformsSpike() {
+        return platformsSpike;
+    }
+
+    public void setPlatformsSpike(Platform[] platformsSpike) {
+        this.platformsSpike = platformsSpike;
+    }
+
+    public Platform[] getPlatformsUn() {
+        return platformsUn;
+    }
+
+    public void setPlatformsUn(Platform[] platformsUn) {
+        this.platformsUn = platformsUn;
+    }
+
+    public Platform[] getPlatformsBomb() {
+        return platformsBomb;
+    }
+
+    public void setPlatformsBomb(Platform[] platformsBomb) {
+        this.platformsBomb = platformsBomb;
+    }
+
+    public Platform[] getJettPosition() {
+        return JettPosition;
+    }
+
+    public void setJettPosition(Platform[] JettPosition) {
+        this.JettPosition = JettPosition;
     }
 }
