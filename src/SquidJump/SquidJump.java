@@ -29,7 +29,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
     SoundPlay sound4;
     SoundPlay sound5;
     
-    BufferedImage background, view, heart0, heart3, heart2, heart1, map_end;
+    BufferedImage background, view, map_end;
 
     int sc1 = 0,health = 100, st=0, sc2=0, high=0, check=0, count=0, h = 150;
     
@@ -59,10 +59,6 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             view = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
             background = ImageIO.read(getClass().getResource("/Img/background.png"));
-            heart0 = ImageIO.read(getClass().getResource("/Img/heart.png")); 
-            heart3 = ImageIO.read(getClass().getResource("/Img/heart3.png"));
-            heart2 = ImageIO.read(getClass().getResource("/Img/heart2.png"));
-            heart1 = ImageIO.read(getClass().getResource("/Img/heart1.png"));
             map_end = ImageIO.read(getClass().getResource("/Img/map_end.jpg"));
             plat.randomPlatform();
             health = 100;
@@ -269,18 +265,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             plat.draw(g2);
             gamep.GameStart(g2);
             g2.drawString("" + sc1, 90, 29);
-            if(health >= 65){
-                g2.drawImage(heart3, 310, 13, 65, 17, null);                       
-            }
-            else if(health >= -15 && health < 65){
-                g2.drawImage(heart2, 310, 13, 65, 17, null);           
-            }  
-            else if(health >= -60 && health < -14){            
-                g2.drawImage(heart1, 310, 13, 65, 17, null);      
-            }
-            else if(health < -60){
-                g2.drawImage(heart0, 310, 13, 65, 17, null);
-            } 
+            gamep.life(g2, health);
         //สร้างหน้าแรกของเกม
         }else{
             gamep.FirstPage(g3);
@@ -296,14 +281,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             if(sc2 > high){
                 high = sc2;
             }
-            g3.setColor(Color.WHITE);
-            g3.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 70));
-            g3.drawString("Game Over", (WIDTH / 2) - 180, (HEIGHT - 50) / 2);
-            g3.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 30));
-            g3.drawString("Your Score : " + sc2, (WIDTH / 2) - 95, (HEIGHT + 60) / 2);
-            g3.drawString("Best Score : " + high, (WIDTH / 2) - 90, (HEIGHT + 150) / 2);
-            g3.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 18));
-            g3.drawString("Press 'space' to restart", (WIDTH / 2) - 100, (HEIGHT + 350) / 2);
+            gamep.gameOver(g3, high, sc2);
             g3.drawImage(map_end, 0, squid.y + 1000, 700, -2000, null);
             st = 0;
             squid.x = 420;
