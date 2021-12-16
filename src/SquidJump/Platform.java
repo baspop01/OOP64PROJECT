@@ -8,9 +8,25 @@ import javax.imageio.ImageIO;
 
 
 public class Platform {
-    public int x, y;
+    private int x, y;
 
-    private Platform[] platforms, platformsBroke, platformsSpike, platformsUn, platformsBomb, JettPosition;
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public Platform[] platforms, platformsBroke, platformsSpike, platformsUn, platformsBomb, JettPosition;
     
     BufferedImage platform, broke, spike, grass, Jett, bomb;
 
@@ -128,52 +144,5 @@ public class Platform {
                         null
                 );
         }
-    }
-        public Platform[] getPlatforms() {
-        return platforms;
-    }
-
-    public void setPlatforms(Platform[] platforms) {
-        this.platforms = platforms;
-    }
-
-    public Platform[] getPlatformsBroke() {
-        return platformsBroke;
-    }
-
-    public void setPlatformsBroke(Platform[] platformsBroke) {
-        this.platformsBroke = platformsBroke;
-    }
-
-    public Platform[] getPlatformsSpike() {
-        return platformsSpike;
-    }
-
-    public void setPlatformsSpike(Platform[] platformsSpike) {
-        this.platformsSpike = platformsSpike;
-    }
-
-    public Platform[] getPlatformsUn() {
-        return platformsUn;
-    }
-
-    public void setPlatformsUn(Platform[] platformsUn) {
-        this.platformsUn = platformsUn;
-    }
-
-    public Platform[] getPlatformsBomb() {
-        return platformsBomb;
-    }
-
-    public void setPlatformsBomb(Platform[] platformsBomb) {
-        this.platformsBomb = platformsBomb;
-    }
-
-    public Platform[] getJettPosition() {
-        return JettPosition;
-    }
-
-    public void setJettPosition(Platform[] JettPosition) {
-        this.JettPosition = JettPosition;
     }
 }

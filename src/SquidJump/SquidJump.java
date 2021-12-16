@@ -96,56 +96,56 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             sc1++;
             for (int i = 0; i < 6; i++) { //สร้างพื้น
                 squid.y = h;
-                plat.platforms[i].y = plat.platforms[i].y - (int) squid.dy;
-                if (plat.platforms[i].y > 533) {
-                    plat.platforms[i].y = 0;
-                    plat.platforms[i].x = new Random().nextInt(350);
+                plat.platforms[i].setY(plat.platforms[i].getY() - (int) squid.dy);
+                if (plat.platforms[i].getY() > 533) {
+                    plat.platforms[i].setY(0);
+                    plat.platforms[i].setX(new Random().nextInt(350));
                 }
             }
             
 
             for (int i = 0; i < 3; i++) {  //สร้างพื้นไม้
                 squid.y = h;
-                plat.platformsBroke[i].y = plat.platformsBroke[i].y - (int) squid.dy;
-                if (plat.platformsBroke[i].y > 533) {
-                    plat.platformsBroke[i].y = 0;
-                    plat.platformsBroke[i].x = new Random().nextInt(400);
+                plat.platformsBroke[i].setY(plat.platformsBroke[i].getY() - (int) squid.dy);
+                if (plat.platformsBroke[i].getY() > 533) {
+                    plat.platformsBroke[i].setY(0);
+                    plat.platformsBroke[i].setX(new Random().nextInt(400));
                 }
             }
             
             for (int i = 0; i < 1; i++) { //สร้างพื้นหนาม
                 squid.y = h;
-                plat.platformsSpike[i].y = plat.platformsSpike[i].y - (int) squid.dy;
-                if (plat.platformsSpike[i].y > 533) {
-                    plat.platformsSpike[i].y = 0;
-                    plat.platformsSpike[i].x = new Random().nextInt(400);
+                plat.platformsSpike[i].setY(plat.platformsSpike[i].getY() - (int) squid.dy);
+                if (plat.platformsSpike[i].getY() > 533) {
+                    plat.platformsSpike[i].setY(0);
+                    plat.platformsSpike[i].setX(new Random().nextInt(400));
                 }
             }
             for (int i = 0; i < 3; i++) { //สร้างหญ้า
                 squid.y = h;
-                plat.platformsUn[i].y = plat.platformsUn[i].y - (int) squid.dy;
-                if (plat.platformsUn[i].y > 533) {
-                    plat.platformsUn[i].y = 0;
-                    plat.platformsUn[i].x = new Random().nextInt(400);
+                plat.platformsUn[i].setY(plat.platformsUn[i].getY() - (int) squid.dy);
+                if (plat.platformsUn[i].getY() > 533) {
+                    plat.platformsUn[i].setY(0);
+                    plat.platformsUn[i].setX(new Random().nextInt(400));
                 }
             }
             
             for (int i = 0; i < 2; i++) { //สร้างระเบิด
                 squid.y = h;
-                plat.platformsBomb[i].y = plat.platformsBomb[i].y - (int) squid.dy;
-                if (plat.platformsBomb[i].y > 1000) {
-                    plat.platformsBomb[i].y = 0;
-                    plat.platformsBomb[i].x = new Random().nextInt(350);
+                plat.platformsBomb[i].setY(plat.platformsBomb[i].getY() - (int) squid.dy);
+                if (plat.platformsBomb[i].getY() > 1000) {
+                    plat.platformsBomb[i].setY(0);
+                    plat.platformsBomb[i].setX(new Random().nextInt(350));
                 }
                 
             }
 
             for (int i = 0; i < 1; i++) { //สร้างเจ็ท
                 squid.y = h;
-                plat.JettPosition[i].y = plat.JettPosition[i].y - (int) squid.dy;
-                if (plat.JettPosition[i].y > 2500) {
-                    plat.JettPosition[i].y = 0;
-                    plat.JettPosition[i].x = new Random().nextInt(400);
+                plat.JettPosition[i].setY(plat.JettPosition[i].getY() - (int) squid.dy);
+                if (plat.JettPosition[i].getY() > 2000) {
+                    plat.JettPosition[i].setY(0);
+                    plat.JettPosition[i].setX(new Random().nextInt(400));
                 }
             }
             
@@ -153,10 +153,10 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
 
         //เกี่ยวกับ Hitbox 
         for (int i = 0; i < 6; i++) {
-            if ((squid.x + 35 > plat.platforms[i].x)
-                    && (squid.x + 35 < plat.platforms[i].x + 68)
-                    && (squid.y + 70 > plat.platforms[i].y)
-                    && (squid.y + 70 < plat.platforms[i].y + 14)
+            if ((squid.x + 35 > plat.platforms[i].getX())
+                    && (squid.x + 35 < plat.platforms[i].getX() + 68)
+                    && (squid.y + 70 > plat.platforms[i].getY())
+                    && (squid.y + 70 < plat.platforms[i].getY() + 14)
                     && (squid.dy > 0)) {
                 squid.dy = -10;
                 squid.doodle = squid.doodle2;
@@ -169,17 +169,17 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
 
             
         for (int i = 0; i < 1; i++) {
-            if ((squid.x + 15 > plat.JettPosition[i].x)
-                    && (squid.x + 15 < plat.JettPosition[i].x + 68)
-                    && (squid.y + 40 > plat.JettPosition[i].y)
-                    && (squid.y + 40 < plat.JettPosition[i].y + 14)
+            if ((squid.x + 15 > plat.JettPosition[i].getX())
+                    && (squid.x + 15 < plat.JettPosition[i].getX() + 68)
+                    && (squid.y + 40 > plat.JettPosition[i].getY())
+                    && (squid.y + 40 < plat.JettPosition[i].getY() + 14)
                     && ((squid.dy < 0) || (squid.dy >= 0))) {
                 squid.dy = -30;
                 squid.doodle = squid.doodleJett;
                 squid.doodleR = squid.doodleJett;
                 squid.doodleL = squid.doodleJett;
-                plat.JettPosition[i].y = -100;
-                plat.JettPosition[i].x = -100;
+                plat.JettPosition[i].setY(-100);
+                plat.JettPosition[i].setX(-100);
                 sound1 = new SoundPlay1("/Music/Jet.wav");
                 
             }
@@ -188,17 +188,17 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
         
         for (int i = 0; i < 3; i++) {
 
-            if ((squid.x + 35 > plat.platformsBroke[i].x)
-                    && (squid.x + 35 < plat.platformsBroke[i].x + 68)
-                    && (squid.y + 70 > plat.platformsBroke[i].y)
-                    && (squid.y + 70 < plat.platformsBroke[i].y + 14)
+            if ((squid.x + 35 > plat.platformsBroke[i].getX())
+                    && (squid.x + 35 < plat.platformsBroke[i].getX() + 68)
+                    && (squid.y + 70 > plat.platformsBroke[i].getY())
+                    && (squid.y + 70 < plat.platformsBroke[i].getY() + 14)
                     && (squid.dy > 0)) {
                 squid.dy = -8;
                 squid.doodle = squid.doodle2;
                 squid.doodleR = squid.doodleR2;
                 squid.doodleL = squid.doodleL2;
-                plat.platformsBroke[i].y = -100;
-                plat.platformsBroke[i].x = -100;
+                plat.platformsBroke[i].setY(-100);
+                plat.platformsBroke[i].setX(-100); 
                 sound2 = new SoundPlay2("/Music/broke.wav");
 
             }
@@ -206,10 +206,10 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
         
         for (int i = 0; i < 1; i++) {
             
-            if ((squid.x + 35 > plat.platformsSpike[i].x)
-                    && (squid.x + 35 < plat.platformsSpike[i].x + 68)
-                    && (squid.y + 60 > plat.platformsSpike[i].y)
-                    && (squid.y + 60 < plat.platformsSpike[i].y + 14)
+            if ((squid.x + 35 > plat.platformsSpike[i].getX())
+                    && (squid.x + 35 < plat.platformsSpike[i].getX() + 68)
+                    && (squid.y + 60 > plat.platformsSpike[i].getY())
+                    && (squid.y + 60 < plat.platformsSpike[i].getY() + 14)
                     && (squid.dy > 0)) {
                 health -= 80;
                 squid.dy = -10;
@@ -218,35 +218,35 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                 squid.doodleL = squid.doodleL2;
                 sound3 = new SoundPlay2("/Music/spike.wav");
                 if(health < -60){
-                    plat.platformsSpike[i].y = -100;
-                    plat.platformsSpike[i].x = -100;
+                    plat.platformsSpike[i].setY(-100);
+                    plat.platformsSpike[i].setX(-100);
                 }
             }
           
         }
         for (int i = 0; i < 3; i++) {
 
-            if ((squid.x + 35 > plat.platformsUn[i].x)
-                    && (squid.x + 35 < plat.platformsUn[i].x + 68)
-                    && (squid.y + 150 > plat.platformsUn[i].y + 80)
-                    && (squid.y + 60 < plat.platformsUn[i].y + 4)
+            if ((squid.x + 35 > plat.platformsUn[i].getX())
+                    && (squid.x + 35 < plat.platformsUn[i].getX() + 68)
+                    && (squid.y + 150 > plat.platformsUn[i].getY() + 80)
+                    && (squid.y + 60 < plat.platformsUn[i].getY() + 4)
                     && (squid.dy > 0)) {
                 squid.dy = -1;
                 squid.doodle = squid.doodle2;
                 squid.doodleR = squid.doodleR2;
                 squid.doodleL = squid.doodleL2;
-                plat.platformsUn[i].y = -100;
-                plat.platformsUn[i].x = -100;
+                plat.platformsUn[i].setY(-100);
+                plat.platformsUn[i].setX(-100);
                 sound2 = new SoundPlay2("/Music/grass.wav");
 
             }
         }
         for (int i = 0; i < 1; i++) {
 
-            if ((squid.x + 35 > plat.platformsBomb[i].x)
-                    && (squid.x + 35 < plat.platformsBomb[i].x + 48)
-                    && (squid.y + 80 > plat.platformsBomb[i].y+20 )
-                    && (squid.y + 65 < plat.platformsBomb[i].y+50)
+            if ((squid.x + 35 > plat.platformsBomb[i].getX())
+                    && (squid.x + 35 < plat.platformsBomb[i].getX() + 48)
+                    && (squid.y + 80 > plat.platformsBomb[i].getY()+20 )
+                    && (squid.y + 65 < plat.platformsBomb[i].getY()+50)
                     && ((squid.dy < 0) || (squid.dy >= 0))) {
                 squid.dy = -1;
                 squid.doodle = squid.doodle2;
@@ -254,8 +254,8 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                 squid.doodleL = squid.doodleL2;
                 health = -61;
                 sound3 = new SoundPlay2("/Music/boomb.wav");
-                plat.platformsBomb[i].y = -100;
-                plat.platformsBomb[i].x = -100;
+                plat.platformsBomb[i].setY(-100);
+                plat.platformsBomb[i].setX(-100);
 
             }
         }
