@@ -5,47 +5,14 @@ import java.applet.Applet;
 import java.applet.AudioClip;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 import java.util.Random;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 
-class Platform { //พื้นธรรมดา
-
-    int x, y;
-}
-
-class PlatformBroke { //พื้นไม้
-
-    int x, y;
-}
-
-class PlatformSpike { //พื้นหนาม
-
-    int x, y;
-}
-
-class PlatformUn { //พื้นหญ้า
-
-    int x, y;
-}
-
-class PlatformBomb { //ระเบิด
-
-    int x, y;
-}
-
-class JettPosition { //เจ็ท
-
-    int x, y;
-}
 
 public class SquidJump extends JPanel implements Runnable, KeyListener {
-
-    final int WIDTH = 400;
-    final int HEIGHT = 533;
+    Image image;
 
     SoundPlay1 sound1;
     SoundPlay2 sound2;
@@ -55,16 +22,14 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
 
     boolean isRunning;
     Thread thread;
-    BufferedImage view, background, platform, doodle, broke,spike,invis, doodleL, doodleR, doodle2, doodleJett, Jett, doodleR2
-            , doodleL2, heart, topbar, scoretop, bomb, map_end, startgame, heart0, heart1, heart2, heart3;
     
     
     Platform[] platforms;
-    PlatformBroke[] platformsBroke;
-    PlatformSpike[] platformsSpike;
-    PlatformUn[] platformsUn;
-    PlatformBomb[] platformsBomb;
-    JettPosition[] JettPosition;
+    Platform[] platformsBroke;
+    Platform[] platformsSpike;
+    Platform[] platformsUn;
+    Platform[] platformsBomb;
+    Platform[] JettPosition;
 
     int x = 100, y = 100, h = 150, sc1 = 0,health = 100, st=0, sc2=0, high=0, check=0, count=0;
     float dy = (int) (Math.random());
@@ -73,6 +38,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
     public SquidJump() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         addKeyListener(this);
+        image = new Image();
     }
 
     @Override
@@ -86,74 +52,42 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
     }
     public void start() {    
         try {
-            view = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-
-            background = ImageIO.read(getClass().getResource("/Img/background.png"));
-            platform = ImageIO.read(getClass().getResource("/Img/platform.png"));
-            doodle = ImageIO.read(getClass().getResource("/Img/squid.png"));
-            doodle2 = ImageIO.read(getClass().getResource("/Img/squid.png"));
-            broke = ImageIO.read(getClass().getResource("/Img/platform1.png"));
-            spike = ImageIO.read(getClass().getResource("/Img/platform2.png"));
-            invis = ImageIO.read(getClass().getResource("/Img/platform3.png"));
-            doodleL = ImageIO.read(getClass().getResource("/Img/squidleft.png"));
-            doodleR = ImageIO.read(getClass().getResource("/Img/squidright.png"));
-            doodleL2 = ImageIO.read(getClass().getResource("/Img/squidleft.png"));
-            doodleR2 = ImageIO.read(getClass().getResource("/Img/squidright.png"));
-            doodleJett = ImageIO.read(getClass().getResource("/Img/squidjett.png"));
-            Jett = ImageIO.read(getClass().getResource("/Img/jettpack.png"));
-            topbar = ImageIO.read(getClass().getResource("/Img/topbar.png"));
-            scoretop = ImageIO.read(getClass().getResource("/Img/score.png"));
-            heart0 = ImageIO.read(getClass().getResource("/Img/heart.png")); 
-            heart3 = ImageIO.read(getClass().getResource("/Img/heart3.png"));
-            heart2 = ImageIO.read(getClass().getResource("/Img/heart2.png"));
-            heart1 = ImageIO.read(getClass().getResource("/Img/heart1.png"));
-            bomb = ImageIO.read(getClass().getResource("/Img/bomb.png"));
-            map_end = ImageIO.read(getClass().getResource("/Img/map_end.jpg"));
-            startgame = ImageIO.read(getClass().getResource("/Img/startgame.png"));
 
             platforms = new Platform[20];
 
-            platformsBroke = new PlatformBroke[20];
+            platformsBroke = new Platform[20];
             
-            platformsSpike = new PlatformSpike[20];
+            platformsSpike = new Platform[20];
             
-            platformsUn = new PlatformUn[20];
+            platformsUn = new Platform[20];
             
-            platformsBomb = new PlatformBomb[3];
+            platformsBomb = new Platform[3];
 
-            JettPosition = new JettPosition[10];
+            JettPosition = new Platform[10];
 
             for (int i = 0; i < 10; i++) {
                 platforms[i] = new Platform();
                 platforms[i].x = new Random().nextInt(400);
                 platforms[i].y = new Random().nextInt(533);
-            }
-            for (int i = 0; i < 10; i++) {
-                platformsBroke[i] = new PlatformBroke();
+                platformsBroke[i] = new Platform();
                 platformsBroke[i].x = new Random().nextInt(400);
                 platformsBroke[i].y = new Random().nextInt(533);
-            }
-            for (int i = 0; i < 10; i++) {
-                platformsSpike[i] = new PlatformSpike();
+                platformsSpike[i] = new Platform();
                 platformsSpike[i].x = new Random().nextInt(400);
                 platformsSpike[i].y = new Random().nextInt(533);
-            }
-            for (int i = 0; i < 10; i++) {
-                platformsUn[i] = new PlatformUn();
+                platformsUn[i] = new Platform();
                 platformsUn[i].x = new Random().nextInt(400);
                 platformsUn[i].y = new Random().nextInt(533);
-            }
-            
+                JettPosition[i] = new Platform();
+                JettPosition[i].x = new Random().nextInt(400);
+                JettPosition[i].y = new Random().nextInt(533);
+            }         
             for (int i = 0; i < 2; i++) {
-                platformsBomb[i] = new PlatformBomb();
+                platformsBomb[i] = new Platform();
                 platformsBomb[i].x = new Random().nextInt(400);
                 platformsBomb[i].y = new Random().nextInt(533);
             }
-            for (int i = 0; i < 10; i++) {
-                JettPosition[i] = new JettPosition();
-                JettPosition[i].x = new Random().nextInt(400);
-                JettPosition[i].y = new Random().nextInt(533);
-            }
+
             health = 100;
 
         } catch (Exception e) {
@@ -163,7 +97,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
 
     public void update() {
 
-        //เกี่ยวกับตพแหน่งตัวละคร
+        //เกี่ยวกับตำแหน่งตัวละคร
         if (right) {
             x += 3;
         } else if (left) {
@@ -246,9 +180,9 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                     && (y + 70 < platforms[i].y + 14)
                     && (dy > 0)) {
                 dy = -10;
-                doodle = doodle2;
-                doodleR = doodleR2;
-                doodleL = doodleL2;
+                image.doodle = image.doodle2;
+                image.doodleR = image.doodleR2;
+                image.doodleL = image.doodleL2;
                 sound1 = new SoundPlay1("/Music/jump.wav");
 
             }
@@ -262,9 +196,9 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                     && (y + 40 < JettPosition[i].y + 14)
                     && ((dy < 0) || (dy >= 0))) {
                 dy = -30;
-                doodle = doodleJett;
-                doodleR = doodleJett;
-                doodleL = doodleJett;
+                image.doodle = image.doodleJett;
+                image.doodleR = image.doodleJett;
+                image.doodleL = image.doodleJett;
                 JettPosition[i].y = -100;
                 JettPosition[i].x = -100;
                 sound1 = new SoundPlay1("/Music/Jet.wav");
@@ -281,9 +215,9 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                     && (y + 70 < platformsBroke[i].y + 14)
                     && (dy > 0)) {
                 dy = -8;
-                doodle = doodle2;
-                doodleR = doodleR2;
-                doodleL = doodleL2;
+                image.doodle = image.doodle2;
+                image.doodleR = image.doodleR2;
+                image.doodleL = image.doodleL2;
                 platformsBroke[i].y = -100;
                 platformsBroke[i].x = -100;
                 sound2 = new SoundPlay2("/Music/broke.wav");
@@ -301,9 +235,9 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                 health -= 80;
                 System.out.println(health);
                 dy = -10;
-                doodle = doodle2;
-                doodleR = doodleR2;
-                doodleL = doodleL2;
+                image.doodle = image.doodle2;
+                image.doodleR = image.doodleR2;
+                image.doodleL = image.doodleL2;
                 sound3 = new SoundPlay2("/Music/spike.wav");
                 if(health < -60){
                     platformsSpike[i].y = -100;
@@ -320,9 +254,9 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                     && (y + 60 < platformsUn[i].y + 4)
                     && (dy > 0)) {
                 dy = -1;
-                doodle = doodle2;
-                doodleR = doodleR2;
-                doodleL = doodleL2;
+                image.doodle = image.doodle2;
+                image.doodleR = image.doodleR2;
+                image.doodleL = image.doodleL2;
                 platformsUn[i].y = -100;
                 platformsUn[i].x = -100;
                 sound2 = new SoundPlay2("/Music/grass.wav");
@@ -337,9 +271,9 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
                     && (y + 65 < platformsBomb[i].y+50)
                     && ((dy < 0) || (dy >= 0))) {
                 dy = -1;
-                doodle = doodle2;
-                doodleR = doodleR2;
-                doodleL = doodleL2;
+                image.doodle = image.doodle2;
+                image.doodleR = image.doodleR2;
+                image.doodleL = image.doodleL2;
                 health = -61;
                 sound3 = new SoundPlay2("/Music/boomb.wav");
                 platformsBomb[i].y = -100;
@@ -351,74 +285,74 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
     }
     //สร้างGraphic
     public void draw() {
-        Graphics2D g3 = (Graphics2D) view.getGraphics();
+        Graphics2D g3 = (Graphics2D) image.view.getGraphics();
         //สร้างตัวเกม
         if (check == 1){
-            Graphics2D g2 = (Graphics2D) view.getGraphics();
-            g2.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
-            g2.drawImage(doodle, x, y, doodle.getWidth(), doodle.getHeight(), null);
+            Graphics2D g2 = (Graphics2D) image.view.getGraphics();
+            g2.drawImage(image.background, 0, 0, WIDTH, HEIGHT, null);
+            g2.drawImage(image.doodle, x, y, image.doodle.getWidth(), image.doodle.getHeight(), null);
             for (int i = 0; i < 6; i++) {
             g2.drawImage(
-                    platform,
+                    image.platform,
                     platforms[i].x,
                     platforms[i].y,
-                    platform.getWidth(),
-                    platform.getHeight(),
+                    image.platform.getWidth(),
+                    image.platform.getHeight(),
                     null
                 );
             }
 
             for (int i = 0; i < 3; i++) {
                 g2.drawImage(
-                        broke,
+                        image.broke,
                         platformsBroke[i].x,
                         platformsBroke[i].y,
-                        broke.getWidth(),
-                        broke.getHeight(),
+                        image.broke.getWidth(),
+                        image.broke.getHeight(),
                         null
                 );
             }
 
             for (int i = 0; i < 1; i++) {  
                 g2.drawImage(
-                        spike,
+                        image.spike,
                         platformsSpike[i].x,
                         platformsSpike[i].y,
-                        spike.getWidth(),
-                        spike.getHeight(),
+                        image.spike.getWidth(),
+                        image.spike.getHeight(),
                         null
                 );
             }
 
             for (int i = 0; i < 3; i++) {
                 g2.drawImage(
-                        invis,
+                        image.invis,
                         platformsUn[i].x,
                         platformsUn[i].y,
-                        invis.getWidth(),
-                        invis.getHeight(),
+                        image.invis.getWidth(),
+                        image.invis.getHeight(),
                         null
                 );
             }
 
             for (int i = 0; i < 1; i++) {
                 g2.drawImage(
-                        bomb,
+                        image.bomb,
                         platformsBomb[i].x,
                         platformsBomb[i].y,
-                        bomb.getWidth(),
-                        bomb.getHeight(),
+                        image.bomb.getWidth(),
+                        image.bomb.getHeight(),
                         null
                 );
             }
 
             for (int i = 0; i < 1; i++) { //jet
                 g2.drawImage(
-                        Jett,
+                        image.Jett,
                         JettPosition[i].x,
                         JettPosition[i].y,
-                        Jett.getWidth(),
-                        Jett.getHeight(),
+                        image.Jett.getWidth(),
+                        image.Jett.getHeight(),
                         null
                 );
         }
@@ -426,39 +360,39 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
         
         
         
-                    g2.drawImage(topbar, 0, 0, 500, 70, null);
-                    g2.drawImage(scoretop, 10, 5, 70, 30, null);
+                    g2.drawImage(image.topbar, 0, 0, 500, 70, null);
+                    g2.drawImage(image.scoretop, 10, 5, 70, 30, null);
                     Font tr = new Font("Berlin Sans FB Demi", Font.PLAIN, 28);
                     g2.setFont(tr);
-                    g2.drawImage(topbar, 0, 0, 500, 70, null);
-                    g2.drawImage(scoretop, 10, 5, 70, 30, null);
+                    g2.drawImage(image.topbar, 0, 0, 500, 70, null);
+                    g2.drawImage(image.scoretop, 10, 5, 70, 30, null);
                     g2.setColor(Color.black);
                     g2.setColor(Color.red);
                     g2.drawString("" + sc1, 90, 29);
 
                     if(health >= 65){
-                        g2.drawImage(heart3, 310, 13, 65, 17, null);                       
+                        g2.drawImage(image.heart3, 310, 13, 65, 17, null);                       
                     }
                     else if(health >= -15 && health < 65){
-                        g2.drawImage(heart2, 310, 13, 65, 17, null);           
+                        g2.drawImage(image.heart2, 310, 13, 65, 17, null);           
                     }  
                     else if(health >= -60 && health < -14){            
-                        g2.drawImage(heart1, 310, 13, 65, 17, null);      
+                        g2.drawImage(image.heart1, 310, 13, 65, 17, null);      
                     }
                     else if(health < -60){
-                        g2.drawImage(heart0, 310, 13, 65, 17, null);
+                        g2.drawImage(image.heart0, 310, 13, 65, 17, null);
                         //gameOver();
         } 
         //สร้างหน้าแรกของเกม
         }else{
-            g3.drawImage(startgame, 0, 0, WIDTH, HEIGHT, null);
+            g3.drawImage(image.startgame, 0, 0, WIDTH, HEIGHT, null);
             x = 100;
             y = 100;
             dy = 0;
         }
         //สร้างหน้าเกม Over
         if ((y >= 500) || (health < -60)){
-            g3.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
+            g3.drawImage(image.background, 0, 0, WIDTH, HEIGHT, null);
             sc2 = sc1;
             count += 1;
             if(sc2 > high){
@@ -473,7 +407,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             g3.drawString("Best Score : " + high, (WIDTH / 2) - 90, (HEIGHT + 150) / 2);
             g3.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 18));
             g3.drawString("Press 'space' to restart", (WIDTH / 2) - 100, (HEIGHT + 350) / 2);
-            g3.drawImage(map_end, 0, y + 1000, 700, -2000, null);
+            g3.drawImage(image.map_end, 0, y + 1000, 700, -2000, null);
             st = 0;
             x = 420;
             if(dy == -10){
@@ -486,7 +420,7 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
             left = false;
         }        
         Graphics g = getGraphics();
-        g.drawImage(view, 0, 0, WIDTH, HEIGHT, null);
+        g.drawImage(image.view, 0, 0, WIDTH, HEIGHT, null);
         g.dispose();
         
     }
@@ -533,11 +467,11 @@ public class SquidJump extends JPanel implements Runnable, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             right = true;
-            doodle = doodleR;
+            image.doodle = image.doodleR;
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             left = true;
-            doodle = doodleL;
+            image.doodle = image.doodleL;
         }
     }
 
